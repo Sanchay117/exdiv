@@ -1,7 +1,10 @@
-// The hero scene: one metallic stock token splitting into its price half (cool silver) and its dividend half
-// (copper), with dividends drifting off the cut as sparks, over a slow nebula in the two brand colours.
+// The hero scene: a stock as an orb of light. Its cool half is the price, its warm half the dividends; the orb
+// parts along a white-hot seam and the dividends peel away from the warm half, spiralling out into an orbit.
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 
 const BG_VERT = /* glsl */ `
 varying vec2 vUv;
@@ -23,144 +26,230 @@ float noise(vec2 p) {
 }
 float fbm(vec2 p) {
   float v = 0.0, a = 0.5;
-  for (int i = 0; i < 6; i++) { v += a * noise(p); p = p * 2.03 + vec2(1.7, 9.2); a *= 0.5; }
+  for (int i = 0; i < 5; i++) { v += a * noise(p); p = p * 2.03 + vec2(1.7, 9.2); a *= 0.5; }
   return v;
 }
 
 void main() {
   vec2 uv = vUv;
-  vec2 p = (uv - 0.5) * vec2(uRes.x / uRes.y, 1.0);
-  float t = uTime * 0.025;
+  float aspect = uRes.x / uRes.y;
+  vec2 p = (uv - 0.5) * vec2(aspect, 1.0);
+  vec2 f = (uFocus - 0.5) * vec2(aspect, 1.0);
+  float t = uTime * 0.02;
+  vec2 q = vec2(fbm(p * 1.2 + t), fbm(p * 1.2 - t + 4.0));
+  float clouds = fbm(p * 1.5 + 1.8 * q);
 
-  // Domain-warped clouds, drifting slowly.
-  vec2 q = vec2(fbm(p * 1.4 + t), fbm(p * 1.4 - t + 3.1));
-  vec2 r = vec2(fbm(p * 1.8 + 2.0 * q + vec2(1.7, 9.2) + t * 1.5), fbm(p * 1.8 + 2.0 * q + vec2(8.3, 2.8) - t));
-  float clouds = fbm(p * 1.6 + 2.2 * r);
+  vec3 col = vec3(0.012, 0.014, 0.024);
+  float d = length(p - f);
+  // A faint halo behind the orb: cool on its price side, warm on its dividend side.
+  float side = clamp((p.x - f.x) * 2.5, -1.0, 1.0);
+  vec3 halo = mix(vec3(0.10, 0.22, 0.55), vec3(0.55, 0.20, 0.06), side * 0.5 + 0.5);
+  col += halo * 0.42 * exp(-d * d * 1.8);
+  col += mix(vec3(0.05, 0.12, 0.32), vec3(0.30, 0.10, 0.03), side * 0.5 + 0.5) * pow(clouds, 3.0) * 0.9 * exp(-d * 0.9);
 
-  vec3 col = vec3(0.016, 0.02, 0.035);
-  vec2 f = (uFocus - 0.5) * vec2(uRes.x / uRes.y, 1.0);
-  float dFocus = length(p - f);
+  vec2 g = floor(uv * uRes / 2.0);
+  float s = step(0.9988, hash(g)) * (0.35 + 0.65 * sin(uTime * 1.3 + hash(g + 3.0) * 50.0));
+  col += vec3(0.75, 0.82, 1.0) * s * 0.45;
 
-  // Cool light from the upper left, warm ember around the token.
-  float cool = smoothstep(1.6, 0.0, length(p - vec2(-0.9, 0.55)));
-  float warm = smoothstep(1.1, 0.0, dFocus);
-  vec3 blue = vec3(0.11, 0.33, 0.78);
-  vec3 ember = vec3(0.95, 0.38, 0.13);
-  col += blue * pow(clouds, 2.2) * (0.25 + 0.9 * cool);
-  col += ember * pow(clouds, 2.6) * (0.08 + 1.1 * warm);
-  col += ember * 0.10 * smoothstep(0.75, 0.0, dFocus);
-  col += vec3(0.6, 0.7, 1.0) * 0.035 * smoothstep(0.55, 0.9, clouds);
-
-  // Sparse stars.
-  vec2 g = floor(uv * uRes / 3.0);
-  float s = step(0.9985, hash(g)) * (0.4 + 0.6 * sin(uTime * 1.5 + hash(g + 4.0) * 40.0));
-  col += vec3(0.8, 0.85, 1.0) * s * 0.5;
-
-  // Vignette and grain.
-  col *= 1.0 - 0.55 * smoothstep(0.35, 1.25, length((uv - 0.5) * vec2(1.25, 1.0)));
-  col += (hash(uv * uRes + fract(uTime)) - 0.5) * 0.025;
-  gl_FragColor = vec4(col, 1.0);
+  col *= 1.0 - 0.6 * smoothstep(0.4, 1.3, length((uv - 0.5) * vec2(1.2, 1.0)));
+  col += (hash(uv * uRes + fract(uTime)) - 0.5) * 0.018;
+  // Tuned as display colours; the composer works in linear light and converts back at the end.
+  gl_FragColor = vec4(pow(max(col, 0.0), vec3(2.2)), 1.0);
 }
 `;
 
-const SPARK_VERT = /* glsl */ `
-attribute float aSeed;
+// Shared by both particle shaders.
+const COMMON = /* glsl */ `
 uniform float uTime;
+uniform float uIntro;
 uniform float uGap;
-uniform float uRadius;
 uniform float uPixelRatio;
-uniform float uOpen;
+uniform float uScale;
+attribute vec3 aDir;
+attribute float aSeed;
+varying vec3 vColor;
 varying float vAlpha;
-varying float vHeat;
+vec3 hash3(float n) { return fract(sin(vec3(n, n + 1.0, n + 2.0)) * vec3(43758.5453, 22578.1459, 19642.3490)); }
+mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
+`;
+
+const CORE_VERT = /* glsl */ `
+${COMMON}
+// A crisp dotted sphere: bright where it faces you, dim behind, cut in two along x.
 void main() {
-  float life = 6.0 + fract(aSeed * 7.13) * 5.0;
-  float age = mod(uTime + aSeed * 37.0, life) / life;
-  // Born along the cut, then carried up and away to the right: the dividend leaving the stock.
-  float y0 = (fract(aSeed * 13.37) * 2.0 - 1.0) * uRadius * 0.92;
-  float z0 = (fract(aSeed * 3.91) - 0.5) * 0.25;
-  float spread = 0.6 + fract(aSeed * 5.7) * 2.6;
-  vec3 pos = vec3(uGap * 0.5, y0, z0);
-  pos.x += age * spread * 1.6 + sin(age * 6.0 + aSeed * 20.0) * 0.06;
-  pos.y += age * (0.9 + fract(aSeed * 9.1) * 1.4) + sin(age * 4.0 + aSeed * 11.0) * 0.08;
-  pos.z += age * (fract(aSeed * 2.3) - 0.3) * 1.5;
+  float side = aDir.x < 0.0 ? -1.0 : 1.0;
+  vec3 pos = aDir;
+  pos += aDir * 0.012 * sin(uTime * 1.3 + aSeed * 40.0);
+  pos.yz = rot(uTime * 0.08 * side) * pos.yz;                       // the halves turn against each other
+  pos.x += side * uGap * 0.5;                                       // and part
+
+  vec3 far = normalize(hash3(aSeed * 91.0) - 0.5) * (3.5 + fract(aSeed * 3.3) * 4.0);
+  float k = smoothstep(0.0, 1.0, clamp(uIntro * 1.15 - fract(aSeed * 5.1) * 0.15, 0.0, 1.0));
+  pos = mix(far, pos, k);
+
   vec4 mv = modelViewMatrix * vec4(pos, 1.0);
   gl_Position = projectionMatrix * mv;
-  float size = (1.0 + fract(aSeed * 17.0) * 2.4) * (1.0 - age * 0.6);
-  gl_PointSize = size * uPixelRatio * (18.0 / -mv.z);
-  vAlpha = uOpen * smoothstep(0.0, 0.08, age) * (1.0 - smoothstep(0.55, 1.0, age));
-  vHeat = 1.0 - age;
+
+  float facing = (normalMatrix * aDir).z;                          // > 0 faces the camera
+  float edge = exp(-pow(aDir.x / 0.05, 2.0));
+  vec3 cool = mix(vec3(0.30, 0.55, 1.00), vec3(0.80, 0.88, 1.00), fract(aSeed * 13.1) * 0.6);
+  vec3 warm = mix(vec3(1.00, 0.48, 0.16), vec3(1.00, 0.80, 0.50), fract(aSeed * 13.1) * 0.6);
+  vColor = mix(side < 0.0 ? cool : warm, vec3(1.0, 0.92, 0.78), edge * 0.7);
+  float sparkle = step(0.992, fract(aSeed * 57.0)) * (0.5 + 0.5 * sin(uTime * 2.5 + aSeed * 90.0));
+  vAlpha = (mix(0.25, 0.95, smoothstep(-0.1, 0.7, facing)) + 0.6 * edge + sparkle) * (0.35 + 0.65 * k);
+  gl_PointSize = (1.6 + fract(aSeed * 31.0) * 0.9 + sparkle * 2.0) * uPixelRatio * uScale * (10.0 / -mv.z);
 }
 `;
 
-const SPARK_FRAG = /* glsl */ `
-varying float vAlpha;
-varying float vHeat;
+// The dark body of each half (it also hides the dots on the far side), with a coloured rim.
+const BODY_VERT = /* glsl */ `
+varying vec3 vN;
+varying vec3 vV;
 void main() {
-  float d = length(gl_PointCoord - 0.5);
-  float a = smoothstep(0.5, 0.0, d);
-  vec3 col = mix(vec3(1.0, 0.45, 0.16), vec3(1.0, 0.86, 0.6), vHeat * vHeat);
-  gl_FragColor = vec4(col * a * vAlpha * 1.6, a * vAlpha);
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  vN = normalize(normalMatrix * normal);
+  vV = normalize(-mv.xyz);
+  gl_Position = projectionMatrix * mv;
+}
+`;
+const BODY_FRAG = /* glsl */ `
+uniform vec3 uRim;
+uniform float uOpacity;
+varying vec3 vN;
+varying vec3 vV;
+void main() {
+  float fres = pow(1.0 - max(dot(vN, vV), 0.0), 3.0);
+  vec3 col = vec3(0.012, 0.016, 0.03) + uRim * fres * 0.55;
+  gl_FragColor = vec4(pow(col, vec3(2.2)), uOpacity);
 }
 `;
 
-/** Coin face artwork: engraved rings, edge ticks and the two halves' letters. */
-function faceTexture(): THREE.CanvasTexture {
-  const size = 1024;
-  const c = document.createElement('canvas');
-  c.width = c.height = size;
-  const g = c.getContext('2d')!;
-  const mid = size / 2;
-  g.fillStyle = '#d9d9d9';
-  g.fillRect(0, 0, size, size);
-  const grad = g.createRadialGradient(mid, mid, 0, mid, mid, mid);
-  grad.addColorStop(0, '#f2f2f2');
-  grad.addColorStop(1, '#bdbdbd');
-  g.fillStyle = grad;
-  g.beginPath();
-  g.arc(mid, mid, mid, 0, Math.PI * 2);
-  g.fill();
-  g.strokeStyle = '#8d8d8d';
-  for (const [r, w] of [[0.94, 10], [0.86, 3], [0.62, 2]] as const) {
-    g.lineWidth = w;
-    g.beginPath();
-    g.arc(mid, mid, mid * r, 0, Math.PI * 2);
-    g.stroke();
+// Each cut face: a disc of warm light with fine concentric rings, hottest in the middle.
+const FACE_VERT = /* glsl */ `
+varying vec2 vUv;
+void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }
+`;
+const FACE_FRAG = /* glsl */ `
+uniform vec3 uRim;
+uniform float uTime;
+uniform float uOpacity;
+varying vec2 vUv;
+void main() {
+  float r = length(vUv - 0.5) * 2.0;
+  vec3 core = vec3(1.0, 0.8, 0.55);
+  vec3 col = mix(core, uRim, smoothstep(0.0, 0.95, r));
+  float rings = 0.7 + 0.3 * smoothstep(0.32, 0.5, abs(fract(r * 12.0 - uTime * 0.25) - 0.5));
+  float glow = (1.0 - smoothstep(0.6, 1.0, r)) * 0.7 + 0.3;
+  gl_FragColor = vec4(pow(col * rings * glow * 0.82, vec3(2.2)), uOpacity);
+}
+`;
+
+// The two cut faces: discs of concentric dots, white-hot in the middle, taking each half's colour at the rim.
+const DISC_VERT = /* glsl */ `
+${COMMON}
+void main() {
+  float side = aDir.x;
+  vec3 pos = vec3(side * uGap * 0.5 - side * 0.004, aDir.y, aDir.z);
+  pos.yz = rot(uTime * 0.08 * side) * pos.yz;
+  float k = smoothstep(0.0, 1.0, clamp((uIntro - 0.55) * 2.2, 0.0, 1.0));
+  vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+  gl_Position = projectionMatrix * mv;
+  float r = length(aDir.yz);
+  vec3 rimColor = side < 0.0 ? vec3(0.35, 0.6, 1.0) : vec3(1.0, 0.5, 0.18);
+  vColor = mix(vec3(1.0, 0.93, 0.80), rimColor, smoothstep(0.15, 1.0, r));
+  vAlpha = k * smoothstep(0.0, 0.6, uGap) * (0.55 - 0.3 * r) * (0.6 + 0.4 * sin(uTime * 1.7 + r * 14.0 - aSeed * 3.0));
+  gl_PointSize = (1.4 + fract(aSeed * 11.0) * 0.8) * uPixelRatio * uScale * (10.0 / -mv.z);
+}
+`;
+
+const STREAM_VERT = /* glsl */ `
+${COMMON}
+uniform float uFlow;
+void main() {
+  // Each dividend leaves a point on the warm half, lifts off, and settles into a tilted orbit.
+  // Born on the warm half's cut face (a point in the unit disc), then pulled out and around.
+  vec2 disc = normalize(aDir.yz + 1e-4) * sqrt(fract(aSeed * 9.7));
+  vec3 start = vec3(uGap * 0.5, disc);
+  float speed = 0.035 + fract(aSeed * 4.7) * 0.03;
+  float u = fract(uTime * speed + aSeed);
+  float ringR = 1.5 + pow(fract(aSeed * 8.3), 1.5) * 0.55;
+  float theta = aSeed * 6.2831 + uTime * (0.22 / ringR) + u * 2.6;
+  vec3 ring = vec3(cos(theta) * ringR, (fract(aSeed * 21.0) - 0.5) * 0.08, sin(theta) * ringR);
+  ring.yz = rot(1.32) * ring.yz;
+  ring.xy = rot(-0.22) * ring.xy;
+  float lift = smoothstep(0.0, 0.45, u);
+  vec3 out1 = start + vec3(-0.15, 0.55, 0.9) * u * 1.4;
+  vec3 pos = mix(out1, ring, lift);
+
+  vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+  gl_Position = projectionMatrix * mv;
+  vColor = mix(vec3(1.0, 0.86, 0.6), vec3(1.0, 0.45, 0.14), lift);
+  vAlpha = uFlow * smoothstep(0.0, 0.06, u) * (1.0 - smoothstep(0.82, 1.0, u)) * (0.25 + 0.6 * fract(aSeed * 2.9));
+  gl_PointSize = (1.4 + fract(aSeed * 17.0) * 2.2) * uPixelRatio * uScale * (9.0 / -mv.z);
+}
+`;
+
+const POINT_FRAG = /* glsl */ `
+varying vec3 vColor;
+varying float vAlpha;
+void main() {
+  vec2 c = gl_PointCoord - 0.5;
+  float d = length(c) * 2.0;
+  float a = (smoothstep(1.0, 0.55, d) + 0.35 * exp(-d * d * 4.0)) * vAlpha;
+  if (a < 0.003) discard;
+  gl_FragColor = vec4(pow(vColor, vec3(2.2)) * a, a);
+}
+`;
+
+/** Evenly spread unit vectors (Fibonacci sphere), with a little jitter so it doesn't look gridded. */
+function sphereDirs(n: number, jitter = 0.015): Float32Array {
+  const out = new Float32Array(n * 3);
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  const v = new THREE.Vector3();
+  for (let i = 0; i < n; i++) {
+    const y = 1 - (i / (n - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const th = golden * i;
+    v.set(Math.cos(th) * r, y, Math.sin(th) * r);
+    v.x += (Math.random() - 0.5) * jitter;
+    v.y += (Math.random() - 0.5) * jitter;
+    v.z += (Math.random() - 0.5) * jitter;
+    v.normalize().toArray(out, i * 3);
   }
-  g.lineWidth = 3;
-  for (let i = 0; i < 120; i++) {
-    const a = (i / 120) * Math.PI * 2;
-    g.beginPath();
-    g.moveTo(mid + Math.cos(a) * mid * 0.87, mid + Math.sin(a) * mid * 0.87);
-    g.lineTo(mid + Math.cos(a) * mid * 0.93, mid + Math.sin(a) * mid * 0.93);
-    g.stroke();
-  }
-  g.fillStyle = '#7a7a7a';
-  g.font = '600 300px "Instrument Serif", Georgia, serif';
-  g.textAlign = 'center';
-  g.textBaseline = 'middle';
-  g.fillText('P', mid * 0.6, mid * 1.02);
-  g.fillText('D', mid * 1.4, mid * 1.02);
-  const tex = new THREE.CanvasTexture(c);
-  // Cap UVs come out a quarter-turn off once the coin is turned to face the camera.
-  tex.center.set(0.5, 0.5);
-  tex.rotation = Math.PI / 2;
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 8;
-  return tex;
+  return out;
 }
 
-function glowTexture(): THREE.CanvasTexture {
-  const c = document.createElement('canvas');
-  c.width = 64;
-  c.height = 256;
-  const g = c.getContext('2d')!;
-  const grad = g.createRadialGradient(32, 128, 0, 32, 128, 128);
-  grad.addColorStop(0, 'rgba(255,170,110,1)');
-  grad.addColorStop(0.25, 'rgba(255,110,50,0.55)');
-  grad.addColorStop(1, 'rgba(255,90,30,0)');
-  g.fillStyle = grad;
-  g.fillRect(0, 0, 64, 256);
-  return new THREE.CanvasTexture(c);
+/** Two unit discs of evenly spread dots (Vogel spiral), tagged with their side in x. */
+function discDots(perSide: number): Float32Array {
+  const out = new Float32Array(perSide * 2 * 3);
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let s = 0; s < 2; s++) {
+    for (let i = 0; i < perSide; i++) {
+      const r = Math.sqrt((i + 0.5) / perSide) * 0.985;
+      const th = i * golden;
+      out.set([s === 0 ? -1 : 1, Math.cos(th) * r, Math.sin(th) * r], (s * perSide + i) * 3);
+    }
+  }
+  return out;
+}
+
+function points(dirs: Float32Array, vertexShader: string, uniforms: Record<string, THREE.IUniform>) {
+  const n = dirs.length / 3;
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+  geo.setAttribute('aDir', new THREE.BufferAttribute(dirs, 3));
+  const seeds = new Float32Array(n);
+  for (let i = 0; i < n; i++) seeds[i] = Math.random();
+  geo.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1));
+  const p = new THREE.Points(
+    geo,
+    new THREE.ShaderMaterial({
+      vertexShader, fragmentShader: POINT_FRAG, uniforms,
+      transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
+    }),
+  );
+  p.frustumCulled = false;
+  return p;
 }
 
 export interface SceneHandle {
@@ -168,26 +257,15 @@ export interface SceneHandle {
 }
 
 export function mountTokenScene(canvas: HTMLCanvasElement, reducedMotion: boolean): SceneHandle {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
   camera.position.set(0, 0, 10);
 
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const env = pmrem.fromScene(new RoomEnvironment(), 0.035).texture;
-  scene.environment = env;
-
-  // Background nebula on a full-screen quad.
-  const bgUniforms = {
-    uTime: { value: 0 },
-    uRes: { value: new THREE.Vector2(1, 1) },
-    uFocus: { value: new THREE.Vector2(0.7, 0.5) },
-  };
+  const bgUniforms = { uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) }, uFocus: { value: new THREE.Vector2(0.7, 0.5) } };
   const bg = new THREE.Mesh(
     new THREE.PlaneGeometry(2, 2),
     new THREE.ShaderMaterial({ vertexShader: BG_VERT, fragmentShader: BG_FRAG, uniforms: bgUniforms, depthTest: false, depthWrite: false }),
@@ -196,105 +274,79 @@ export function mountTokenScene(canvas: HTMLCanvasElement, reducedMotion: boolea
   bg.renderOrder = -1;
   scene.add(bg);
 
-  // The token: two half-cylinders whose cut faces glow.
-  const R = 1.55;
-  const T = 0.3;
-  const face = faceTexture();
-  const token = new THREE.Group();
-  const spin = new THREE.Group();
-  token.add(spin);
-  scene.add(token);
-
-  const edge = (color: number) =>
-    new THREE.MeshPhysicalMaterial({ color, metalness: 1, roughness: 0.22, clearcoat: 0.6, clearcoatRoughness: 0.2 });
-  const faceMat = (color: number) =>
-    new THREE.MeshPhysicalMaterial({ color, map: face, bumpMap: face, bumpScale: 1.6, metalness: 1, roughness: 0.3, clearcoat: 0.4 });
-  const cutMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(1.0, 0.42, 0.16).multiplyScalar(1.6), toneMapped: false });
-
-  const halves: THREE.Group[] = [];
-  for (const side of [-1, 1] as const) {
-    const half = new THREE.Group();
-    const silver = 0xc9d6ee;
-    const copper = 0xf0a271;
-    const color = side < 0 ? silver : copper;
-    const geo = new THREE.CylinderGeometry(R, R, T, 128, 1, false, side < 0 ? Math.PI : 0, Math.PI);
-    const body = new THREE.Mesh(geo, [edge(color), faceMat(color), faceMat(color)]);
-    half.add(body);
-    const cut = new THREE.Mesh(new THREE.PlaneGeometry(2 * R, T), cutMat);
-    cut.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2;
-    cut.position.x = side * 0.0005;
-    half.add(cut);
-    spin.add(half);
-    halves.push(half);
-  }
-  spin.rotation.x = Math.PI / 2; // face the camera
-
-  // Light in the gap between the halves.
-  const glow = new THREE.Mesh(
-    new THREE.PlaneGeometry(1, 1),
-    new THREE.MeshBasicMaterial({ map: glowTexture(), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
-  );
-  glow.scale.set(0.9, R * 2.3, 1);
-  token.add(glow);
-
-  // Dividends leaving the stock.
-  const COUNT = 520;
-  const seeds = new Float32Array(COUNT);
-  for (let i = 0; i < COUNT; i++) seeds[i] = Math.random();
-  const sparkGeo = new THREE.BufferGeometry();
-  sparkGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(COUNT * 3), 3));
-  sparkGeo.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1));
-  const sparkUniforms = {
+  const shared = {
     uTime: { value: 0 },
+    uIntro: { value: 0 },
     uGap: { value: 0 },
-    uRadius: { value: R },
     uPixelRatio: { value: renderer.getPixelRatio() },
-    uOpen: { value: 0 },
+    uScale: { value: 1 },
   };
-  const sparks = new THREE.Points(
-    sparkGeo,
-    new THREE.ShaderMaterial({
-      vertexShader: SPARK_VERT, fragmentShader: SPARK_FRAG, uniforms: sparkUniforms,
-      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    }),
-  );
-  sparks.frustumCulled = false;
-  token.add(sparks);
+  const flow = { value: 0 };
+  const orb = new THREE.Group();
+  // Each half: a dark body (hides the far side's dots) and a glowing cut face.
+  const COOL = new THREE.Color(0.35, 0.6, 1.0);
+  const WARM = new THREE.Color(1.0, 0.5, 0.18);
+  const bodyOpacity = { value: 0 };
+  const halves = ([-1, 1] as const).map((side) => {
+    const half = new THREE.Group();
+    const rim = side < 0 ? COOL : WARM;
+    const body = new THREE.Mesh(
+      // phi in [-90, 90] degrees gives x <= 0 in three's sphere parametrisation, [90, 270] gives x >= 0.
+      new THREE.SphereGeometry(0.985, 96, 64, side < 0 ? -Math.PI / 2 : Math.PI / 2, Math.PI),
+      new THREE.ShaderMaterial({ vertexShader: BODY_VERT, fragmentShader: BODY_FRAG, uniforms: { uRim: { value: rim }, uOpacity: bodyOpacity }, side: THREE.DoubleSide, transparent: true }),
+    );
+    const face = new THREE.Mesh(
+      new THREE.CircleGeometry(0.985, 96),
+      new THREE.ShaderMaterial({ vertexShader: FACE_VERT, fragmentShader: FACE_FRAG, uniforms: { uRim: { value: rim }, uTime: shared.uTime, uOpacity: bodyOpacity }, side: THREE.DoubleSide, transparent: true }),
+    );
+    face.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2;
+    half.add(body, face);
+    orb.add(half);
+    return { side, half };
+  });
+  const dots = [
+    points(sphereDirs(14_000, 0.004), CORE_VERT, shared),
+    points(discDots(2_600), DISC_VERT, shared),
+    points(sphereDirs(7_000, 0.2), STREAM_VERT, { ...shared, uFlow: flow }),
+  ];
+  for (const d of dots) {
+    // Dots sit just above the bodies and are hidden behind them.
+    (d.material as THREE.ShaderMaterial).depthTest = true;
+    d.renderOrder = 1;
+    orb.add(d);
+  }
+  scene.add(orb);
 
-  scene.add(new THREE.HemisphereLight(0x9fb8ff, 0x1a0d08, 0.6));
-  const key = new THREE.DirectionalLight(0xffd2b0, 2.2);
-  key.position.set(4, 3, 6);
-  scene.add(key);
-  const rim = new THREE.DirectionalLight(0x6f9bff, 2.4);
-  rim.position.set(-5, 2, -3);
-  scene.add(rim);
-  const ember = new THREE.PointLight(0xff6a2a, 4, 5, 1.8);
-  ember.position.set(0.1, 0, 0.35);
-  token.add(ember);
+  // Bloom gives the particles their glow.
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.6, 0.45, 0.3);
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
 
-  // Layout: token on the right on wide screens, above the copy on narrow ones.
   let baseY = 0;
   function resize() {
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
     if (!w || !h) return;
     renderer.setSize(w, h, false);
+    composer.setPixelRatio(renderer.getPixelRatio());
+    composer.setSize(w, h);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     bgUniforms.uRes.value.set(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
     const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
     const halfW = halfH * camera.aspect;
     if (camera.aspect > 1.05) {
-      baseY = -0.05;
-      const x = halfW * 0.56;
-      token.position.set(x, baseY, 0);
-      token.scale.setScalar(THREE.MathUtils.clamp(halfW * 0.19, 0.5, 0.95));
+      const x = halfW * 0.53;
+      baseY = 0;
+      orb.position.set(x, baseY, 0);
+      shared.uScale.value = THREE.MathUtils.clamp(halfW * 0.22, 0.7, 1.15);
       bgUniforms.uFocus.value.set(0.5 + (x / halfW) * 0.5, 0.5);
     } else {
-      // About 55% of the screen width, in the band above the copy.
       baseY = halfH * 0.5;
-      token.position.set(0, baseY, 0);
-      token.scale.setScalar(THREE.MathUtils.clamp(halfW * 0.34, 0.3, 0.62));
+      orb.position.set(0, baseY, 0);
+      shared.uScale.value = THREE.MathUtils.clamp(halfW * 0.36, 0.4, 0.8);
       bgUniforms.uFocus.value.set(0.5, 0.75);
     }
   }
@@ -309,34 +361,34 @@ export function mountTokenScene(canvas: HTMLCanvasElement, reducedMotion: boolea
   };
   window.addEventListener('pointermove', onPointer, { passive: true });
 
-
   const clock = new THREE.Clock();
   let raf = 0;
-  const ease = (x: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+  const ease = (x: number) => {
+    const c = Math.min(1, Math.max(0, x));
+    return c < 0.5 ? 4 * c * c * c : 1 - Math.pow(-2 * c + 2, 3) / 2;
+  };
 
   function draw(t: number) {
     pointer.x += (pointer.tx - pointer.x) * 0.04;
     pointer.y += (pointer.ty - pointer.y) * 0.04;
-
-    // The two halves part after a beat, then breathe.
-    const open = ease((t - 0.6) / 2.2);
-    const gap = open * (0.34 + 0.05 * Math.sin(t * 0.8));
-    halves[0].position.x = -gap / 2;
-    halves[1].position.x = gap / 2;
-    halves[0].rotation.z = -open * 0.04;
-    halves[1].rotation.z = open * 0.05;
-    glow.scale.x = 0.25 + gap * 2.4;
-    glow.material.opacity = 0.2 + open * 0.8;
-    ember.intensity = 1.5 + open * 3.5;
-    sparkUniforms.uTime.value = t;
-    sparkUniforms.uGap.value = gap;
-    sparkUniforms.uOpen.value = open;
-
-    token.rotation.y = -0.38 + Math.sin(t * 0.25) * 0.18 + pointer.x * 0.22;
-    token.rotation.x = 0.1 + Math.sin(t * 0.33) * 0.05 + pointer.y * 0.12;
-    token.position.y = baseY + Math.sin(t * 0.6) * 0.05;
+    // Gather (0 to 2.2s), part (2 to 3.8s), then let the dividends flow.
+    shared.uIntro.value = ease(t / 2.2);
+    const open = ease((t - 2.0) / 1.8);
+    shared.uGap.value = open * (1.35 + 0.05 * Math.sin(t * 0.7));
+    flow.value = ease((t - 2.6) / 2.5);
+    shared.uTime.value = t;
     bgUniforms.uTime.value = t;
-    renderer.render(scene, camera);
+    orb.scale.setScalar(shared.uScale.value);
+    bodyOpacity.value = ease((t - 0.8) / 1.8);
+    for (const { side, half } of halves) {
+      half.position.x = side * shared.uGap.value * 0.5;
+      half.scale.setScalar(0.4 + 0.6 * shared.uIntro.value);
+    }
+    // Turned so you look into the cut: the warm half's glowing face shows through the gap.
+    orb.rotation.y = 0.3 + Math.sin(t * 0.15) * 0.06 + pointer.x * 0.12;
+    orb.rotation.x = 0.12 + Math.sin(t * 0.21) * 0.04 + pointer.y * 0.08;
+    orb.position.y = baseY + Math.sin(t * 0.5) * 0.04;
+    composer.render();
   }
 
   function frame() {
@@ -345,9 +397,8 @@ export function mountTokenScene(canvas: HTMLCanvasElement, reducedMotion: boolea
     if (canvas.getBoundingClientRect().bottom < 0) return;
     draw(clock.getElapsedTime());
   }
-  if (reducedMotion) draw(4);
+  if (reducedMotion) draw(8);
   else frame();
-  // Dev only: render a given moment on demand (for screenshots from a backgrounded tab).
   if (import.meta.env.DEV) {
     const w = window as unknown as { __exdivDraw: (t: number) => void; __exdivReplay: () => void };
     w.__exdivDraw = draw;
@@ -365,9 +416,8 @@ export function mountTokenScene(canvas: HTMLCanvasElement, reducedMotion: boolea
         const mats = Array.isArray(m.material) ? m.material : m.material ? [m.material] : [];
         mats.forEach((mat) => mat.dispose());
       });
-      face.dispose();
-      env.dispose();
-      pmrem.dispose();
+      bloom.dispose();
+      composer.dispose();
       renderer.dispose();
     },
   };
