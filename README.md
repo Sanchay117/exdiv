@@ -5,7 +5,7 @@
 Built on Robinhood Chain for the Arbitrum Open House Singapore buildathon, with Paxos USDG as the quote currency.
 
 - **App:** https://sanchay117.github.io/exdiv/ (Robinhood Chain testnet)
-- **Demo video:** https://sanchay117.github.io/exdiv/demo.mp4 (2:57, narrated, real testnet transactions)
+- **Demo video:** https://sanchay117.github.io/exdiv/demo.mp4 (2:14, narrated, real testnet transactions)
 - **Contracts:** [Robinhood Chain testnet](#deployed-contracts), verified on Blockscout (factory [`0xC89dFACC…`](https://explorer.testnet.chain.robinhood.com/address/0xC89dFACC621770Eaa314cfFe9579C66506755945#code))
 
 ![Exdiv](docs/hero.png)
