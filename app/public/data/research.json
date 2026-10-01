@@ -1,0 +1,1481 @@
+{
+ "generatedAt": "2026-10-01T13:45:24.726Z",
+ "netRatio": 0.6732168437636854,
+ "replay": {
+  "tokens": 195,
+  "events": 47,
+  "dividends": 45,
+  "splits": 1,
+  "freezes": 0,
+  "maxDividendStepBps": 214.86444855206344,
+  "rows": [
+   {
+    "symbol": "CRWD",
+    "token": "0xea72Ecca2d0f6bFA1394DBBCff85b52CD4233931",
+    "block": 978630,
+    "tx": "0x07884f2f2440316a996ab3a9c0f8bce962ec872af6924745f5a04a9e9ac1d31f",
+    "effectiveAt": 1782999000,
+    "multiplier": 4,
+    "stepBps": 30000,
+    "kind": "split"
+   },
+   {
+    "symbol": "CRWD",
+    "token": "0xea72Ecca2d0f6bFA1394DBBCff85b52CD4233931",
+    "block": 1231096,
+    "tx": "0x5dbbb9524fc402fea6786eb5a5dd40205ce8c6e848fb313eecedf7e9395f5bf0",
+    "effectiveAt": 1782999000,
+    "multiplier": 4,
+    "stepBps": 0,
+    "kind": "repeat"
+   },
+   {
+    "symbol": "SGOV",
+    "token": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+    "block": 4629631,
+    "tx": "0x79292bc8af671bd6fc4ebc8f5e7a27c814d87988e175cbfab2ab1db1df0efbfb",
+    "effectiveAt": 1783541672,
+    "multiplier": 1.0009575198909908,
+    "stepBps": 9.57519890990799,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "MU",
+    "token": "0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD",
+    "block": 18239875,
+    "tx": "0x7ceb72589f22e0257aeb44441275c6f9d835d1baa4a0c8f4cf87a4e08286cb69",
+    "effectiveAt": 1784905824,
+    "multiplier": 1.0000748232191712,
+    "stepBps": 0.7482321917118284,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "ORCL",
+    "token": "0xb0992820E760d836549ba69BC7598b4af75dEE03",
+    "block": 20823272,
+    "tx": "0xdb44087be277205a6819d8656cdd87e1c0a061822798c735f3efdf94bbfc9bd7",
+    "effectiveAt": 1785165023,
+    "multiplier": 1.0022109149710134,
+    "stepBps": 22.109149710134446,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "DELL",
+    "token": "0x941AE714EC6D8130c7B75d67160Ca08f1e7d11Dd",
+    "block": 26853518,
+    "tx": "0x8881e24ee42a7fdac96523e3166e8361ea72d24c45f2f6991a1da174acb531a8",
+    "effectiveAt": 1785769823,
+    "multiplier": 1.0000637086201245,
+    "stepBps": 0.6370862012450296,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "ASML",
+    "token": "0x47F93d52cBeC7C6D2CfC080e154002370a60dAEA",
+    "block": 29439914,
+    "tx": "0x1f74e07c6a56f9cf89b70d4b09263abe20c577757269be45608af2a30328ee6a",
+    "effectiveAt": 1786029025,
+    "multiplier": 1.0001013232514178,
+    "stepBps": 1.01323251417762,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "SGOV",
+    "token": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+    "block": 30302195,
+    "tx": "0x94aaa4c5c537412b8a5ed4a1933cc8ee7cb3c5bc903a741e11d4aada5dc02ebd",
+    "effectiveAt": 1786115424,
+    "multiplier": 1.0029815193467666,
+    "stepBps": 20.220632899548008,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "COST",
+    "token": "0x4EA005168D7F09a7A0Ba9D1DEf21a479950E44C2",
+    "block": 32889913,
+    "tx": "0x728a9545a0d36b55ef5b4c12a9b9a3565e22167abe78f4453efb78d1292fcf62",
+    "effectiveAt": 1786374624,
+    "multiplier": 1.0006120402962597,
+    "stepBps": 6.120402962597193,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "AAPL",
+    "token": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
+    "block": 36345344,
+    "tx": "0x6d72ca599d812b9eb483fa82ba204e6d079e981b675669c9b659b7fac8adff35",
+    "effectiveAt": 1786720366,
+    "multiplier": 1.0005660800610925,
+    "stepBps": 5.660800610924888,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "CCL",
+    "token": "0x9651342CeA770aE9a2969Ba2A52611523146aef9",
+    "block": 50955407,
+    "tx": "0x391030f47dae3d1ac98f9f4384c31186fad48fae6d62d1b3fae5e1449e2fdd02",
+    "effectiveAt": 1788189026,
+    "multiplier": 1.0214864448552063,
+    "stepBps": 214.86444855206344,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "SGOV",
+    "token": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+    "block": 51269236,
+    "tx": "0xf33317c324c4d1d53278dd5c0fcb6ca3afeea41ccf39441ecada548148f5f4e7",
+    "effectiveAt": 1788220826,
+    "multiplier": 1.005101770003215,
+    "stepBps": 21.13947879946343,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "F",
+    "token": "0x25C288E6D899b9BC30160965aD9644c67e73bE0C",
+    "block": 52665452,
+    "tx": "0x17717969d77a298b876c0c3c735b6367ee1f75e1906f67953a6a30dc35cc442e",
+    "effectiveAt": 1788361826,
+    "multiplier": 1.000145502866134,
+    "stepBps": 1.455028661339064,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "UPS",
+    "token": "0xf23250dac154D05Bb671CB0d0eBEf3c635c79CE2",
+    "block": 54355503,
+    "tx": "0xc3a0a692808a98d480dc407c4817334ba33ca4d8d60de81b9b7c320fcfba81bb",
+    "effectiveAt": 1788534626,
+    "multiplier": 1.0022087249692058,
+    "stepBps": 22.087249692057664,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "WDC",
+    "token": "0xF52597345A8Edf418bc4071b4a35112472277D3e",
+    "block": 57331474,
+    "tx": "0x622c00f5e99864fcf2f2e7ff963ff47b2de4c7d9fc64b0a7a487672bd14dde1b",
+    "effectiveAt": 1788834869,
+    "multiplier": 1.0002175652505239,
+    "stepBps": 2.1756525052385456,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "KSS",
+    "token": "0x12e3c047bf9AeCAF9dDC98c05C31BFD1dd043993",
+    "block": 58096279,
+    "tx": "0x5f7066cbb048bfe76452fdafc353c75c03cf246c7e59b68f489f83d06eae21e3",
+    "effectiveAt": 1788912027,
+    "multiplier": 1.0046100687323167,
+    "stepBps": 46.1006873231673,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "JNJ",
+    "token": "0x03DfbBE0AC4E7bCDaFd08eD41A400326B77D8c80",
+    "block": 58637294,
+    "tx": "0x64c7bfc1e54fe6ca6fb7cbda1b5d8d934f8fb0968c74704684c5e85ef6a5f831",
+    "effectiveAt": 1788966626,
+    "multiplier": 1.000021490286702,
+    "stepBps": 0.21490286701952854,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "NVDA",
+    "token": "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+    "block": 58952659,
+    "tx": "0x4ac23f2e58e2c4962dcd701c2beff581e87f3995152a29d527c07a3afd67d956",
+    "effectiveAt": 1788998430,
+    "multiplier": 1.0007751591646306,
+    "stepBps": 7.751591646305567,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "LLY",
+    "token": "0x8005d266423c7ea827372c9c864491e5786600ea",
+    "block": 60346735,
+    "tx": "0xb20fb11da8a57ff41835258059c4c80ae7a5a454db171f9fdd30802924289c03",
+    "effectiveAt": 1789139430,
+    "multiplier": 1.0000022887743756,
+    "stepBps": 0.022887743755806156,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "AMAT",
+    "token": "0x36046893810a7E7fCE501229d57dc3FC8c8716d0",
+    "block": 60346800,
+    "tx": "0x2a3ed01be18866d44a1ca93b451caba9feaba045bff264bf6e1450b4dc2fcf98",
+    "effectiveAt": 1789139430,
+    "multiplier": 1.0000446563026366,
+    "stepBps": 0.4465630263661424,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "XOM",
+    "token": "0xf9B46d3D1B22199D4D1025a9cEDB540A33F1a2d5",
+    "block": 60346845,
+    "tx": "0x2cd7aa15b670f84e1302097b2bc3e07282c6cef0148b70b7bc3b0f920a49cdbd",
+    "effectiveAt": 1789139430,
+    "multiplier": 1.0010395637646619,
+    "stepBps": 10.39563764661855,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "MSFT",
+    "token": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
+    "block": 60346891,
+    "tx": "0x4df2fb31b1e2a4804e73bc8121b0186f3d56d642980de79f77c6fb55c8c82800",
+    "effectiveAt": 1789139430,
+    "multiplier": 1.000412952576206,
+    "stepBps": 4.129525762059938,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "VRT",
+    "token": "0xFA78C12E6488814A0262E4e802749a4a737d5fB7",
+    "block": 62453660,
+    "tx": "0x71ff5185219e82e5cf2b360d0f9e6cf45738466c89025a3c9a60e7e8b8807e69",
+    "effectiveAt": 1789353521,
+    "multiplier": 1.0001627888920521,
+    "stepBps": 1.6278889205212366,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "UNH",
+    "token": "0xcF364ea52787e289De6F32077834056E3E70D6A8",
+    "block": 62453696,
+    "tx": "0x1cf421a3d4491b59379495ea58f3f0a955776b12ee9917a381a2ef23f4efff5e",
+    "effectiveAt": 1789353521,
+    "multiplier": 1.0042415010397021,
+    "stepBps": 42.41501039702111,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "GOOGL",
+    "token": "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3",
+    "block": 63746832,
+    "tx": "0x8b9babad437e92388a66f13a03db0ee998a96831c244d1620d88115810b65c51",
+    "effectiveAt": 1789485027,
+    "multiplier": 1.0001939244141127,
+    "stepBps": 1.9392441411270056,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "SOXX",
+    "token": "0x75742c18BC1f1C5c5f448f4C9D9C6F66dafAAa38",
+    "block": 64062899,
+    "tx": "0x25ca20c977b0e0c206bd48e76515c85e9971b7397d950059cff00500ba912269",
+    "effectiveAt": 1789517433,
+    "multiplier": 1.000450838210426,
+    "stepBps": 4.508382104260189,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "TSM",
+    "token": "0x58FfE4a942d3885bAa22D7520691F611EF09e7AA",
+    "block": 64062939,
+    "tx": "0x53888b0500828784f8eb5e98b22e2becf1e5d9b00d4e48c26d0b440e08f34037",
+    "effectiveAt": 1789517433,
+    "multiplier": 1.0014630241596905,
+    "stepBps": 14.630241596904625,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "PR",
+    "token": "0x4189F0c66EBBB0bfeF1C31f763131361EF32f77C",
+    "block": 64062986,
+    "tx": "0x81f4f290ae140538cda6ff63538b3eb5aee01c04dac6e9acb0c6eff7cd91d4f7",
+    "effectiveAt": 1789517433,
+    "multiplier": 1.0044779422922294,
+    "stepBps": 44.7794229222942,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "HPE",
+    "token": "0x59dd09d4900C2E4B5F75b7c0d4E6796fcc234Cb1",
+    "block": 64924198,
+    "tx": "0x44d2c674d74b6bbb890c3e5822e909f4fe773b865bfe701ffa1612e757d0c1ea",
+    "effectiveAt": 1789604133,
+    "multiplier": 1.001716957939305,
+    "stepBps": 17.169579393050416,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "CRM",
+    "token": "0xd95B44124e475743a7589e68F3D74008A5536D44",
+    "block": 65383603,
+    "tx": "0xc6189b8fcc4e3e0a92fdd33b0c74c0646165112f113af6782866ca460c64edde",
+    "effectiveAt": 1789650372,
+    "multiplier": 1.0011483228007143,
+    "stepBps": 11.483228007143076,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "SPY",
+    "token": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+    "block": 65779981,
+    "tx": "0x2fe45ab24d1b3fa87883f8b08daf29dae969c5b43d0afe9ccca299c11a641025",
+    "effectiveAt": 1789690233,
+    "multiplier": 1.001717991187472,
+    "stepBps": 17.179911874720677,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "XLK",
+    "token": "0x15Cd20759CE7F3285c29A319dE2D1A2e098c6f43",
+    "block": 68357795,
+    "tx": "0xf4e850ef0965aafdc64e0e46ddaa0d8288a7d70ecab2e9ee9d5788d64cc9dba4",
+    "effectiveAt": 1789950036,
+    "multiplier": 1.0008044045204287,
+    "stepBps": 8.044045204287364,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "VST",
+    "token": "0x561e2a49212b7cCF47f2744Ccb83e200722fADBc",
+    "block": 68357834,
+    "tx": "0x8e773a31369dd9da2cc3b29d64ca42d63b63c9402f00dac20abb6534bfbedde4",
+    "effectiveAt": 1789950036,
+    "multiplier": 1.0011147387107964,
+    "stepBps": 11.147387107963702,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "AVGO",
+    "token": "0x156E175DD063a8cE274C50654eF40e0032b3fbcF",
+    "block": 68357872,
+    "tx": "0x4f48d60ed90f20583ba87a441e10983c1beb0bf067a85124849d49396fbefdc8",
+    "effectiveAt": 1789950036,
+    "multiplier": 1.0012573186622782,
+    "stepBps": 12.57318662278184,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "META",
+    "token": "0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35",
+    "block": 68357919,
+    "tx": "0x8928618da3daf1cc5a9e9f7a0e76d7bc28df824fea7d6838434a9c085c6b0b5e",
+    "effectiveAt": 1789950036,
+    "multiplier": 1.0005414598794518,
+    "stepBps": 5.4145987945175555,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "LHX",
+    "token": "0x48d60243c66437c6ac3c2495Be94747aEd5Dfe25",
+    "block": 68894296,
+    "tx": "0x63e2256ceeee54b768f478aeeafc355f6cb34dbc5d2b2075334121b4c20fa79f",
+    "effectiveAt": 1790004027,
+    "multiplier": 1.0049224883235617,
+    "stepBps": 49.2248832356168,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "QQQ",
+    "token": "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68",
+    "block": 69210998,
+    "tx": "0x6331915e6ddac124b1ea59b0db720892615fbd8ffbbea59cc9772147e326bba6",
+    "effectiveAt": 1790035834,
+    "multiplier": 1.0007007912414054,
+    "stepBps": 7.007912414054296,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "LRCX",
+    "token": "0x57b0030166DB0C31690d1A5aA167e2e26e2C29a4",
+    "block": 70068206,
+    "tx": "0x2095d389e1ad9f39036b521ccc611a7c799007b60ab09cbe6bfb60a68b3188dc",
+    "effectiveAt": 1790122233,
+    "multiplier": 1.000732562938506,
+    "stepBps": 7.325629385059873,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "AMKR",
+    "token": "0xDd356AA38F40A7b7076755aC854B6FBb1F0D305B",
+    "block": 70604066,
+    "tx": "0xa8178a6ee3c7c9c55904d255e978f581ebf1eed1c686c4d8cde025ba72bd96e3",
+    "effectiveAt": 1790176227,
+    "multiplier": 1.000866850964062,
+    "stepBps": 8.66850964061916,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "SCHD",
+    "token": "0xd63ABB2C13d7a8421a8017a712802053568e3C1D",
+    "block": 70926092,
+    "tx": "0x11af5b79ea834f50d14c28ea86d03a23f3ff0b252da5402df163a3d8216de329",
+    "effectiveAt": 1790208634,
+    "multiplier": 1.005538606893684,
+    "stepBps": 55.386068936840175,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "QCOM",
+    "token": "0x0f17206447090e464C277571124dD2688E48AEA9",
+    "block": 72318000,
+    "tx": "0x4ad3dc4ba35567d476722ea16011f5db6f32776729bff7ceff6b28ba4b2dc361",
+    "effectiveAt": 1790349047,
+    "multiplier": 1.0012281227947928,
+    "stepBps": 12.281227947927853,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "SPMO",
+    "token": "0xAd622320e520de39e72d41EF07438C3Fd3354875",
+    "block": 72458704,
+    "tx": "0xbd2190b74fa987ab344fac2284948e53e33e0f07dfe81163f39391baa84ed7d4",
+    "effectiveAt": 1790363201,
+    "multiplier": 1.0020248837424162,
+    "stepBps": 20.248837424161614,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "VTI",
+    "token": "0x0594134DF3f171a354D9C85eBD65b7A6148F6D09",
+    "block": 74351599,
+    "tx": "0xfa0d93715e2852a00c6f4a791b61a5b94b2ad782b5236b269acede2919b59a13",
+    "effectiveAt": 1790554251,
+    "multiplier": 1.0017510123450308,
+    "stepBps": 17.510123450308335,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "LMT",
+    "token": "0x329fcACEb9AD6F9580DD5F643fed0646900D043c",
+    "block": 74888832,
+    "tx": "0xb07ab6fa84ff553c6c04d29cdea6f3bb59efa2612fa87dd29afa4b072c492930",
+    "effectiveAt": 1790608228,
+    "multiplier": 1.00002105080289,
+    "stepBps": 0.21050802889943654,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "TER",
+    "token": "0x2778C5024D5cA2CdB0f8eAD671ffc69963AdCD9C",
+    "block": 74888884,
+    "tx": "0x94174405793a33c4a624369a77f6133279c1bb2d5991bf292972100c07830f78",
+    "effectiveAt": 1790608228,
+    "multiplier": 1.000647857966979,
+    "stepBps": 6.478579669790818,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "MPWR",
+    "token": "0x52D50D0280AD1054b43f052bD70a49a212A1b128",
+    "block": 76070684,
+    "tx": "0x403cf31e2e0bbad103b58c6bec491e44809a30890ba34afed72f53f1ce13b8e1",
+    "effectiveAt": 1790727051,
+    "multiplier": 1.0010033370411568,
+    "stepBps": 10.033370411568487,
+    "kind": "dividend"
+   },
+   {
+    "symbol": "SGOV",
+    "token": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+    "block": 76929117,
+    "tx": "0x17eef4102c7aadc5403096deb3e462cf006f1b745eb287e452b16337bd8235bd",
+    "effectiveAt": 1790813435,
+    "multiplier": 1.007186931447954,
+    "stepBps": 20.745774278483342,
+    "kind": "dividend"
+   }
+  ]
+ },
+ "reinvested": {
+  "medianRatio": 0.6732168437636854,
+  "typicalCount": 25,
+  "rows": [
+   {
+    "symbol": "SGOV",
+    "exDate": "2026-07-01",
+    "effective": "2026-07-08",
+    "dividend": 0.296,
+    "close": 100.66999816894531,
+    "grossBps": 29.403000435467387,
+    "stepBps": 9.57519890990799,
+    "ratio": 0.32565380294855556
+   },
+   {
+    "symbol": "MU",
+    "exDate": "2026-07-06",
+    "effective": "2026-07-24",
+    "dividend": 0.15,
+    "close": 975.5599975585938,
+    "grossBps": 1.5375784203471377,
+    "stepBps": 0.7482321917118284,
+    "ratio": 0.4866302634131017
+   },
+   {
+    "symbol": "ORCL",
+    "exDate": "2026-07-10",
+    "effective": "2026-07-27",
+    "dividend": 0.5,
+    "close": 144.22000122070312,
+    "grossBps": 34.66925501094947,
+    "stepBps": 22.109149710134446,
+    "ratio": 0.6377163196368595
+   },
+   {
+    "symbol": "DELL",
+    "exDate": "2026-07-21",
+    "effective": "2026-08-03",
+    "dividend": 0.63,
+    "close": 381.8800048828125,
+    "grossBps": 16.49732879293662,
+    "stepBps": 0.6370862012450296,
+    "ratio": 0.03861753676860704
+   },
+   {
+    "symbol": "ASML",
+    "exDate": "2026-07-28",
+    "effective": "2026-08-06",
+    "dividend": 2.138,
+    "close": 1655.260009765625,
+    "grossBps": 12.916399764304872,
+    "stepBps": 1.01323251417762,
+    "ratio": 0.07844542849918129
+   },
+   {
+    "symbol": "SGOV",
+    "exDate": "2026-08-03",
+    "effective": "2026-08-07",
+    "dividend": 0.307,
+    "close": 100.70999908447266,
+    "grossBps": 30.48356695371402,
+    "stepBps": 20.220632899548008,
+    "ratio": 0.6633289644302728
+   },
+   {
+    "symbol": "COST",
+    "exDate": "2026-07-24",
+    "effective": "2026-08-10",
+    "dividend": 1.47,
+    "close": 926.0599975585938,
+    "grossBps": 15.87370152987296,
+    "stepBps": 6.120402962597193,
+    "ratio": 0.38556873146941273
+   },
+   {
+    "symbol": "AAPL",
+    "exDate": "2026-08-10",
+    "effective": "2026-08-14",
+    "dividend": 0.27,
+    "close": 313.3299865722656,
+    "grossBps": 8.61711331729585,
+    "stepBps": 5.660800610924888,
+    "ratio": 0.6569253997812474
+   },
+   {
+    "symbol": "CCL",
+    "exDate": "2026-08-07",
+    "effective": "2026-08-31",
+    "dividend": 0.15,
+    "close": 28.790000915527344,
+    "grossBps": 52.10142244875732,
+    "stepBps": 214.86444855206344,
+    "ratio": 4.123965113685456
+   },
+   {
+    "symbol": "SGOV",
+    "exDate": "2026-09-01",
+    "effective": "2026-09-01",
+    "dividend": 0.307,
+    "close": 100.69000244140625,
+    "grossBps": 30.48962087161038,
+    "stepBps": 21.13947879946343,
+    "ratio": 0.6933336064912144
+   },
+   {
+    "symbol": "F",
+    "exDate": "2026-08-11",
+    "effective": "2026-09-02",
+    "dividend": 0.15,
+    "close": 14,
+    "grossBps": 107.14285714285714,
+    "stepBps": 1.455028661339064,
+    "ratio": 0.013580267505831264
+   },
+   {
+    "symbol": "UPS",
+    "exDate": "2026-08-17",
+    "effective": "2026-09-04",
+    "dividend": 1.64,
+    "close": 104.5,
+    "grossBps": 156.93779904306217,
+    "stepBps": 22.087249692057664,
+    "ratio": 0.14073887761097723
+   },
+   {
+    "symbol": "WDC",
+    "exDate": "2026-09-08",
+    "effective": "2026-09-08",
+    "dividend": 0.15,
+    "close": 467.4599914550781,
+    "grossBps": 3.208830760747889,
+    "stepBps": 2.1756525052385456,
+    "ratio": 0.6780203343386866
+   },
+   {
+    "symbol": "KSS",
+    "exDate": "2026-09-09",
+    "effective": "2026-09-09",
+    "dividend": 0.125,
+    "close": 18.610000610351562,
+    "grossBps": 67.1681869427078,
+    "stepBps": 46.1006873231673,
+    "ratio": 0.6863470553774159
+   },
+   {
+    "symbol": "JNJ",
+    "exDate": "2026-08-25",
+    "effective": "2026-09-09",
+    "dividend": 1.34,
+    "close": 273.0400085449219,
+    "grossBps": 49.07705677058448,
+    "stepBps": 0.21490286701952854,
+    "ratio": 0.004378886615473155
+   },
+   {
+    "symbol": "NVDA",
+    "exDate": "2026-09-10",
+    "effective": "2026-09-10",
+    "dividend": 0.25,
+    "close": 223.6699981689453,
+    "grossBps": 11.17718075944932,
+    "stepBps": 7.751591646305567,
+    "ratio": 0.6935193957342312
+   },
+   {
+    "symbol": "LLY",
+    "exDate": "2026-08-14",
+    "effective": "2026-09-11",
+    "dividend": 1.73,
+    "close": 1209,
+    "grossBps": 14.309346567411083,
+    "stepBps": 0.022887743755806156,
+    "ratio": 0.0015994960809693436
+   },
+   {
+    "symbol": "AMAT",
+    "exDate": "2026-08-20",
+    "effective": "2026-09-11",
+    "dividend": 0.53,
+    "close": 496.1700134277344,
+    "grossBps": 10.681822473279976,
+    "stepBps": 0.4465630263661424,
+    "ratio": 0.041805883544984636
+   },
+   {
+    "symbol": "XOM",
+    "exDate": "2026-08-17",
+    "effective": "2026-09-11",
+    "dividend": 1.03,
+    "close": 160.10000610351562,
+    "grossBps": 64.33478830313314,
+    "stepBps": 10.39563764661855,
+    "ratio": 0.16158656802655985
+   },
+   {
+    "symbol": "MSFT",
+    "exDate": "2026-08-20",
+    "effective": "2026-09-11",
+    "dividend": 0.91,
+    "close": 484.30999755859375,
+    "grossBps": 18.789618314453744,
+    "stepBps": 4.129525762059938,
+    "ratio": 0.21977699030125256
+   },
+   {
+    "symbol": "VRT",
+    "exDate": "2026-09-14",
+    "effective": "2026-09-14",
+    "dividend": 0.063,
+    "close": 257.05999755859375,
+    "grossBps": 2.450789722179154,
+    "stepBps": 1.6278889205212366,
+    "ratio": 0.6642303522775411
+   },
+   {
+    "symbol": "UNH",
+    "exDate": "2026-09-14",
+    "effective": "2026-09-14",
+    "dividend": 2.32,
+    "close": 379.0899963378906,
+    "grossBps": 61.19918811922794,
+    "stepBps": 42.41501039702111,
+    "ratio": 0.6930649196585486
+   },
+   {
+    "symbol": "GOOGL",
+    "exDate": "2026-09-04",
+    "effective": "2026-09-15",
+    "dividend": 0.22,
+    "close": 342.4800109863281,
+    "grossBps": 6.423732566651385,
+    "stepBps": 1.9392441411270056,
+    "ratio": 0.3018874339810679
+   },
+   {
+    "symbol": "SOXX",
+    "exDate": "2026-09-15",
+    "effective": "2026-09-16",
+    "dividend": 0.325,
+    "close": 497.3999938964844,
+    "grossBps": 6.533976758906774,
+    "stepBps": 4.508382104260189,
+    "ratio": 0.6899905326590884
+   },
+   {
+    "symbol": "TSM",
+    "exDate": "2026-09-16",
+    "effective": "2026-09-16",
+    "dividend": 1.107,
+    "close": 413.75,
+    "grossBps": 26.75528700906344,
+    "stepBps": 14.630241596904625,
+    "ratio": 0.546816843786747
+   },
+   {
+    "symbol": "PR",
+    "exDate": "2026-09-16",
+    "effective": "2026-09-16",
+    "dividend": 0.16,
+    "close": 24.489999771118164,
+    "grossBps": 65.33278950402159,
+    "stepBps": 44.7794229222942,
+    "ratio": 0.6854050356986178
+   },
+   {
+    "symbol": "HPE",
+    "exDate": "2026-09-17",
+    "effective": "2026-09-17",
+    "dividend": 0.143,
+    "close": 56.68000030517578,
+    "grossBps": 25.229357662325526,
+    "stepBps": 17.169579393050416,
+    "ratio": 0.6805396959705158
+   },
+   {
+    "symbol": "CRM",
+    "exDate": "2026-09-17",
+    "effective": "2026-09-17",
+    "dividend": 0.44,
+    "close": 250.5399932861328,
+    "grossBps": 17.56206640819582,
+    "stepBps": 11.483228007143076,
+    "ratio": 0.6538654245028996
+   },
+   {
+    "symbol": "SPY",
+    "exDate": "2026-09-18",
+    "effective": "2026-09-18",
+    "dividend": 1.889,
+    "close": 762.5999755859375,
+    "grossBps": 24.770522691776932,
+    "stepBps": 17.179911874720677,
+    "ratio": 0.6935627515209395
+   },
+   {
+    "symbol": "XLK",
+    "exDate": "2026-09-21",
+    "effective": "2026-09-21",
+    "dividend": 0.221,
+    "close": 189.60000610351562,
+    "grossBps": 11.656117768231557,
+    "stepBps": 8.044045204287364,
+    "ratio": 0.6901135836334117
+   },
+   {
+    "symbol": "VST",
+    "exDate": "2026-09-21",
+    "effective": "2026-09-21",
+    "dividend": 0.23,
+    "close": 140.6699981689453,
+    "grossBps": 16.350323664877635,
+    "stepBps": 11.147387107963702,
+    "ratio": 0.6817838800285994
+   },
+   {
+    "symbol": "AVGO",
+    "exDate": "2026-09-21",
+    "effective": "2026-09-21",
+    "dividend": 0.65,
+    "close": 357.6099853515625,
+    "grossBps": 18.176226241585287,
+    "stepBps": 12.57318662278184,
+    "ratio": 0.6917380129223808
+   },
+   {
+    "symbol": "META",
+    "exDate": "2026-09-21",
+    "effective": "2026-09-21",
+    "dividend": 0.525,
+    "close": 665.75,
+    "grossBps": 7.8858430341719865,
+    "stepBps": 5.4145987945175555,
+    "ratio": 0.6866226947523929
+   },
+   {
+    "symbol": "LHX",
+    "exDate": "2026-09-04",
+    "effective": "2026-09-21",
+    "dividend": 1.25,
+    "close": 262.1400146484375,
+    "grossBps": 47.68444076255989,
+    "stepBps": 49.2248832356168,
+    "ratio": 1.0323049289961772
+   },
+   {
+    "symbol": "QQQ",
+    "exDate": "2026-09-21",
+    "effective": "2026-09-22",
+    "dividend": 0.751,
+    "close": 721.4500122070312,
+    "grossBps": 10.409591618171447,
+    "stepBps": 7.007912414054296,
+    "ratio": 0.6732168437636854
+   },
+   {
+    "symbol": "LRCX",
+    "exDate": "2026-09-23",
+    "effective": "2026-09-23",
+    "dividend": 0.33,
+    "close": 310.9599914550781,
+    "grossBps": 10.612297693212165,
+    "stepBps": 7.325629385059873,
+    "ratio": 0.6902962578731173
+   },
+   {
+    "symbol": "AMKR",
+    "exDate": "2026-09-02",
+    "effective": "2026-09-23",
+    "dividend": 0.084,
+    "close": 45.72999954223633,
+    "grossBps": 18.36868594814164,
+    "stepBps": 8.66850964061916,
+    "ratio": 0.4719177879730778
+   },
+   {
+    "symbol": "SCHD",
+    "exDate": "2026-09-23",
+    "effective": "2026-09-24",
+    "dividend": 0.267,
+    "close": 33.7400016784668,
+    "grossBps": 79.13455445095667,
+    "stepBps": 55.386068936840175,
+    "ratio": 0.6998974003343315
+   },
+   {
+    "symbol": "QCOM",
+    "exDate": "2026-09-03",
+    "effective": "2026-09-25",
+    "dividend": 0.92,
+    "close": 169.9600067138672,
+    "grossBps": 54.13038148138273,
+    "stepBps": 12.281227947927853,
+    "ratio": 0.2268823461396034
+   },
+   {
+    "symbol": "SPMO",
+    "exDate": "2026-09-21",
+    "effective": "2026-09-25",
+    "dividend": 0.243,
+    "close": 149.2100067138672,
+    "grossBps": 16.285770998321134,
+    "stepBps": 20.248837424161614,
+    "ratio": 1.2433453366284608
+   },
+   {
+    "symbol": "VTI",
+    "exDate": "2026-09-28",
+    "effective": "2026-09-28",
+    "dividend": 0.956,
+    "close": 379.7699890136719,
+    "grossBps": 25.173131833900218,
+    "stepBps": 17.510123450308335,
+    "ratio": 0.6955878023380371
+   },
+   {
+    "symbol": "LMT",
+    "exDate": "2026-09-01",
+    "effective": "2026-09-28",
+    "dividend": 3.45,
+    "close": 561.22998046875,
+    "grossBps": 61.4721258675186,
+    "stepBps": 0.21050802889943654,
+    "ratio": 0.0034244468680506034
+   },
+   {
+    "symbol": "TER",
+    "exDate": "2026-09-04",
+    "effective": "2026-09-28",
+    "dividend": 0.13,
+    "close": 338.5899963378906,
+    "grossBps": 3.839451885940201,
+    "stepBps": 6.478579669790818,
+    "ratio": 1.6873709743609275
+   },
+   {
+    "symbol": "MPWR",
+    "exDate": "2026-09-30",
+    "effective": "2026-09-30",
+    "dividend": 2,
+    "close": 1355.989990234375,
+    "grossBps": 14.749371414270628,
+    "stepBps": 10.033370411568487,
+    "ratio": 0.6802574923200311
+   },
+   {
+    "symbol": "SGOV",
+    "exDate": "2026-09-01",
+    "effective": "2026-10-01",
+    "dividend": 0.307,
+    "close": 100.69000244140625,
+    "grossBps": 30.48962087161038,
+    "stepBps": 20.745774278483342,
+    "ratio": 0.6804208673450653
+   }
+  ]
+ },
+ "dilution": [
+  {
+   "symbol": "SGOV",
+   "recordDate": "2026-07-01",
+   "appliedDate": "2026-07-08",
+   "supplyAtRecord": 1904.5749999999998,
+   "supplyAtApply": 4058.3700000000003,
+   "ratio": 0.32565380294855556,
+   "growth": 2.1308533399839864,
+   "adjustedRatio": 0.6939204936914166
+  },
+  {
+   "symbol": "MU",
+   "recordDate": "2026-07-06",
+   "appliedDate": "2026-07-24",
+   "supplyAtRecord": 796.326,
+   "supplyAtApply": 1184.659,
+   "ratio": 0.4866302634131017,
+   "growth": 1.4876558093042298,
+   "adjustedRatio": 0.7239383383497484
+  },
+  {
+   "symbol": "ORCL",
+   "recordDate": "2026-07-10",
+   "appliedDate": "2026-07-27",
+   "supplyAtRecord": 2808.813,
+   "supplyAtApply": 3644.9570000000003,
+   "ratio": 0.6377163196368595,
+   "growth": 1.2976858908015594,
+   "adjustedRatio": 0.82755547032665
+  },
+  {
+   "symbol": "DELL",
+   "recordDate": "2026-07-21",
+   "appliedDate": "2026-08-03",
+   "supplyAtRecord": 5.998,
+   "supplyAtApply": 97.632,
+   "ratio": 0.03861753676860704,
+   "growth": 16.277425808602867,
+   "adjustedRatio": 0.6285940896619944
+  },
+  {
+   "symbol": "ASML",
+   "recordDate": "2026-07-28",
+   "appliedDate": "2026-08-06",
+   "supplyAtRecord": 1.848,
+   "supplyAtApply": 13.225,
+   "ratio": 0.07844542849918129,
+   "growth": 7.156385281385281,
+   "adjustedRatio": 0.5613857099035025
+  },
+  {
+   "symbol": "SGOV",
+   "recordDate": "2026-08-03",
+   "appliedDate": "2026-08-07",
+   "supplyAtRecord": 7731.258136580001,
+   "supplyAtApply": 8090.95571899,
+   "ratio": 0.6633289644302728,
+   "growth": 1.0465251031663412,
+   "adjustedRatio": 0.6941904129336135
+  },
+  {
+   "symbol": "AAPL",
+   "recordDate": "2026-08-10",
+   "appliedDate": "2026-08-14",
+   "supplyAtRecord": 5413.843,
+   "supplyAtApply": 5866.52,
+   "ratio": 0.6569253997812474,
+   "growth": 1.0836147261751035,
+   "adjustedRatio": 0.7118540372014268
+  },
+  {
+   "symbol": "CCL",
+   "recordDate": "2026-08-07",
+   "appliedDate": "2026-08-31",
+   "supplyAtRecord": 64.914,
+   "supplyAtApply": 12.984,
+   "ratio": 4.123965113685456,
+   "growth": 0.20001848599685737,
+   "adjustedRatio": 0.8248692583432227
+  },
+  {
+   "symbol": "F",
+   "recordDate": "2026-08-11",
+   "appliedDate": "2026-09-02",
+   "supplyAtRecord": 73.957,
+   "supplyAtApply": 3777.0389999999998,
+   "ratio": 0.013580267505831264,
+   "growth": 51.070743810592646,
+   "adjustedRatio": 0.6935543626696244
+  },
+  {
+   "symbol": "UPS",
+   "recordDate": "2026-08-17",
+   "appliedDate": "2026-09-04",
+   "supplyAtRecord": 424.962,
+   "supplyAtApply": 2121.337,
+   "ratio": 0.14073887761097723,
+   "growth": 4.99182750457688,
+   "adjustedRatio": 0.7025442002217553
+  },
+  {
+   "symbol": "JNJ",
+   "recordDate": "2026-08-25",
+   "appliedDate": "2026-09-09",
+   "supplyAtRecord": 9.211,
+   "supplyAtApply": 1476.481,
+   "ratio": 0.004378886615473155,
+   "growth": 160.29540766474867,
+   "adjustedRatio": 0.701915415144981
+  },
+  {
+   "symbol": "LLY",
+   "recordDate": "2026-08-14",
+   "appliedDate": "2026-09-11",
+   "supplyAtRecord": 4.48,
+   "supplyAtApply": 2088.454,
+   "ratio": 0.0015994960809693436,
+   "growth": 466.17276785714284,
+   "adjustedRatio": 0.7456415152421315
+  },
+  {
+   "symbol": "AMAT",
+   "recordDate": "2026-08-20",
+   "appliedDate": "2026-09-11",
+   "supplyAtRecord": 15.08,
+   "supplyAtApply": 268.943,
+   "ratio": 0.041805883544984636,
+   "growth": 17.83441644562334,
+   "adjustedRatio": 0.7455835370184881
+  },
+  {
+   "symbol": "XOM",
+   "recordDate": "2026-08-17",
+   "appliedDate": "2026-09-11",
+   "supplyAtRecord": 82.289,
+   "supplyAtApply": 342.384,
+   "ratio": 0.16158656802655985,
+   "growth": 4.160750525586652,
+   "adjustedRatio": 0.6723213978442522
+  },
+  {
+   "symbol": "MSFT",
+   "recordDate": "2026-08-20",
+   "appliedDate": "2026-09-11",
+   "supplyAtRecord": 1896.7640000000001,
+   "supplyAtApply": 5876.607000000001,
+   "ratio": 0.21977699030125256,
+   "growth": 3.0982278238093937,
+   "adjustedRatio": 0.6809191863844279
+  },
+  {
+   "symbol": "GOOGL",
+   "recordDate": "2026-09-04",
+   "appliedDate": "2026-09-15",
+   "supplyAtRecord": 6905.782999999999,
+   "supplyAtApply": 15777.178,
+   "ratio": 0.3018874339810679,
+   "growth": 2.2846327491031793,
+   "adjustedRatio": 0.6897019182158717
+  },
+  {
+   "symbol": "LHX",
+   "recordDate": "2026-09-04",
+   "appliedDate": "2026-09-21",
+   "supplyAtRecord": 84.59,
+   "supplyAtApply": 60.378,
+   "ratio": 1.0323049289961772,
+   "growth": 0.7137723135122355,
+   "adjustedRatio": 0.7368306774196853
+  },
+  {
+   "symbol": "AMKR",
+   "recordDate": "2026-09-02",
+   "appliedDate": "2026-09-23",
+   "supplyAtRecord": 114.737,
+   "supplyAtApply": 142.885,
+   "ratio": 0.4719177879730778,
+   "growth": 1.2453262678996313,
+   "adjustedRatio": 0.5876916176519625
+  },
+  {
+   "symbol": "QCOM",
+   "recordDate": "2026-09-03",
+   "appliedDate": "2026-09-25",
+   "supplyAtRecord": 136.245,
+   "supplyAtApply": 349.98129,
+   "ratio": 0.2268823461396034,
+   "growth": 2.5687642849278873,
+   "adjustedRatio": 0.5828072676440598
+  },
+  {
+   "symbol": "SPMO",
+   "recordDate": "2026-09-21",
+   "appliedDate": "2026-09-25",
+   "supplyAtRecord": 119.336,
+   "supplyAtApply": 64.942,
+   "ratio": 1.2433453366284608,
+   "growth": 0.5441945431387007,
+   "adjustedRatio": 0.6766217474301593
+  },
+  {
+   "symbol": "LMT",
+   "recordDate": "2026-09-01",
+   "appliedDate": "2026-09-28",
+   "supplyAtRecord": 3.057,
+   "supplyAtApply": 665.5328099999999,
+   "ratio": 0.0034244468680506034,
+   "growth": 217.70782139352303,
+   "adjustedRatio": 0.7455288671211702
+  },
+  {
+   "symbol": "TER",
+   "recordDate": "2026-09-04",
+   "appliedDate": "2026-09-28",
+   "supplyAtRecord": 142.371,
+   "supplyAtApply": 51.07601,
+   "ratio": 1.6873709743609275,
+   "growth": 0.358752906139593,
+   "adjustedRatio": 0.6053492407875793
+  },
+  {
+   "symbol": "SGOV",
+   "recordDate": "2026-09-01",
+   "appliedDate": "2026-10-01",
+   "supplyAtRecord": 7401.66265947,
+   "supplyAtApply": 27785.747755649998,
+   "ratio": 0.6804208673450653,
+   "growth": 3.753987317984526,
+   "adjustedRatio": 2.5542913069054065
+  }
+ ],
+ "assets": {
+  "SPY": {
+   "symbol": "SPY",
+   "mainnetAddress": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+   "multiplier": 1.001717991187472,
+   "sharePrice": 763.73,
+   "tokenPrice": 765.042081409608,
+   "quotedAt": "2026-10-01T13:45:16.984781904Z",
+   "tradingHalt": false,
+   "dividends12m": [
+    {
+     "date": "2025-12-19",
+     "amount": 1.993
+    },
+    {
+     "date": "2026-03-20",
+     "amount": 1.797
+    },
+    {
+     "date": "2026-06-18",
+     "amount": 1.904
+    },
+    {
+     "date": "2026-09-18",
+     "amount": 1.889
+    }
+   ],
+   "annualDividend": 7.583,
+   "grossYield": 0.009928901575163998,
+   "netYield": 0.006684303780472191,
+   "projected": [
+    {
+     "date": "2026-12-18",
+     "amount": 1.993,
+     "net": 1.3417211696210252
+    },
+    {
+     "date": "2027-03-19",
+     "amount": 1.797,
+     "net": 1.2097706682433427
+    },
+    {
+     "date": "2027-06-17",
+     "amount": 1.904,
+     "net": 1.281804870526057
+    },
+    {
+     "date": "2027-09-17",
+     "amount": 1.889,
+     "net": 1.2717066178696017
+    }
+   ],
+   "reinvestedSoFar": [
+    {
+     "date": "2026-09-18",
+     "stepBps": 17.179911874720677
+    }
+   ]
+  },
+  "SCHD": {
+   "symbol": "SCHD",
+   "mainnetAddress": "0xd63ABB2C13d7a8421a8017a712802053568e3C1D",
+   "multiplier": 1.005538606893684,
+   "sharePrice": 32.685,
+   "tokenPrice": 32.86602936632006,
+   "quotedAt": "2026-10-01T13:45:12.024373538Z",
+   "tradingHalt": false,
+   "dividends12m": [
+    {
+     "date": "2025-12-10",
+     "amount": 0.278
+    },
+    {
+     "date": "2026-03-25",
+     "amount": 0.257
+    },
+    {
+     "date": "2026-06-24",
+     "amount": 0.253
+    },
+    {
+     "date": "2026-09-23",
+     "amount": 0.267
+    }
+   ],
+   "annualDividend": 1.0550000000000002,
+   "grossYield": 0.03227780327367294,
+   "netYield": 0.021729960843527248,
+   "projected": [
+    {
+     "date": "2026-12-09",
+     "amount": 0.278,
+     "net": 0.18715428256630456
+    },
+    {
+     "date": "2027-03-24",
+     "amount": 0.257,
+     "net": 0.17301672884726715
+    },
+    {
+     "date": "2027-06-23",
+     "amount": 0.253,
+     "net": 0.1703238614722124
+    },
+    {
+     "date": "2027-09-22",
+     "amount": 0.267,
+     "net": 0.179748897284904
+    }
+   ],
+   "reinvestedSoFar": [
+    {
+     "date": "2026-09-24",
+     "stepBps": 55.386068936840175
+    }
+   ]
+  },
+  "MSFT": {
+   "symbol": "MSFT",
+   "mainnetAddress": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
+   "multiplier": 1.000412952576206,
+   "sharePrice": 519.2349999999999,
+   "tokenPrice": 519.4494194309063,
+   "quotedAt": "2026-10-01T13:45:15.070476183Z",
+   "tradingHalt": false,
+   "dividends12m": [
+    {
+     "date": "2025-11-20",
+     "amount": 0.91
+    },
+    {
+     "date": "2026-02-19",
+     "amount": 0.91
+    },
+    {
+     "date": "2026-05-21",
+     "amount": 0.91
+    },
+    {
+     "date": "2026-08-20",
+     "amount": 0.91
+    }
+   ],
+   "annualDividend": 3.64,
+   "grossYield": 0.0070103132492994515,
+   "netYield": 0.004719460959488123,
+   "projected": [
+    {
+     "date": "2026-11-19",
+     "amount": 0.91,
+     "net": 0.6126273278249538
+    },
+    {
+     "date": "2027-02-18",
+     "amount": 0.91,
+     "net": 0.6126273278249538
+    },
+    {
+     "date": "2027-05-20",
+     "amount": 0.91,
+     "net": 0.6126273278249538
+    },
+    {
+     "date": "2027-08-19",
+     "amount": 0.91,
+     "net": 0.6126273278249538
+    }
+   ],
+   "reinvestedSoFar": [
+    {
+     "date": "2026-09-11",
+     "stepBps": 4.129525762059938
+    }
+   ]
+  },
+  "UPS": {
+   "symbol": "UPS",
+   "mainnetAddress": "0xf23250dac154D05Bb671CB0d0eBEf3c635c79CE2",
+   "multiplier": 1.0022087249692058,
+   "sharePrice": 93.365,
+   "tokenPrice": 93.5712176067499,
+   "quotedAt": "2026-10-01T13:45:15.309459468Z",
+   "tradingHalt": false,
+   "dividends12m": [
+    {
+     "date": "2025-11-17",
+     "amount": 1.64
+    },
+    {
+     "date": "2026-02-17",
+     "amount": 1.64
+    },
+    {
+     "date": "2026-05-18",
+     "amount": 1.64
+    },
+    {
+     "date": "2026-08-17",
+     "amount": 1.64
+    }
+   ],
+   "annualDividend": 6.56,
+   "grossYield": 0.07026187543512023,
+   "netYield": 0.04730147801734886,
+   "projected": [
+    {
+     "date": "2026-11-16",
+     "amount": 1.64,
+     "net": 1.104075623772444
+    },
+    {
+     "date": "2027-02-16",
+     "amount": 1.64,
+     "net": 1.104075623772444
+    },
+    {
+     "date": "2027-05-17",
+     "amount": 1.64,
+     "net": 1.104075623772444
+    },
+    {
+     "date": "2027-08-16",
+     "amount": 1.64,
+     "net": 1.104075623772444
+    }
+   ],
+   "reinvestedSoFar": [
+    {
+     "date": "2026-09-04",
+     "stepBps": 22.087249692057664
+    }
+   ]
+  },
+  "AMZN": {
+   "symbol": "AMZN",
+   "mainnetAddress": "",
+   "multiplier": 1,
+   "sharePrice": 248.79000000000002,
+   "tokenPrice": 248.79000000000002,
+   "quotedAt": "2026-10-01T13:45:19.187082874Z",
+   "tradingHalt": false,
+   "dividends12m": [],
+   "annualDividend": 0,
+   "grossYield": 0,
+   "netYield": 0,
+   "projected": [],
+   "reinvestedSoFar": []
+  },
+  "TSLA": {
+   "symbol": "TSLA",
+   "mainnetAddress": "",
+   "multiplier": 1,
+   "sharePrice": 357.12,
+   "tokenPrice": 357.12,
+   "quotedAt": "2026-10-01T13:45:20.916509020Z",
+   "tradingHalt": false,
+   "dividends12m": [],
+   "annualDividend": 0,
+   "grossYield": 0,
+   "netYield": 0,
+   "projected": [],
+   "reinvestedSoFar": []
+  },
+  "AMD": {
+   "symbol": "AMD",
+   "mainnetAddress": "",
+   "multiplier": 1,
+   "sharePrice": 615.845,
+   "tokenPrice": 615.845,
+   "quotedAt": "2026-10-01T13:45:12.096263503Z",
+   "tradingHalt": false,
+   "dividends12m": [],
+   "annualDividend": 0,
+   "grossYield": 0,
+   "netYield": 0,
+   "projected": [],
+   "reinvestedSoFar": []
+  },
+  "PLTR": {
+   "symbol": "PLTR",
+   "mainnetAddress": "",
+   "multiplier": 1,
+   "sharePrice": 187.135,
+   "tokenPrice": 187.135,
+   "quotedAt": "2026-10-01T13:45:22.189901137Z",
+   "tradingHalt": false,
+   "dividends12m": [],
+   "annualDividend": 0,
+   "grossYield": 0,
+   "netYield": 0,
+   "projected": [],
+   "reinvestedSoFar": []
+  },
+  "NFLX": {
+   "symbol": "NFLX",
+   "mainnetAddress": "",
+   "multiplier": 1,
+   "sharePrice": 68.89,
+   "tokenPrice": 68.89,
+   "quotedAt": "2026-10-01T13:45:12.515880337Z",
+   "tradingHalt": false,
+   "dividends12m": [],
+   "annualDividend": 0,
+   "grossYield": 0,
+   "netYield": 0,
+   "projected": [],
+   "reinvestedSoFar": []
+  }
+ }
+}

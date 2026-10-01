@@ -1,0 +1,20 @@
+{
+  "name": "exdiv",
+  "private": true,
+  "type": "module",
+  "description": "Exdiv: dividend strips for Robinhood stock tokens",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "abis": "node scripts/export-abis.ts",
+    "keeper": "node scripts/keeper.ts",
+    "market-maker": "node scripts/market-maker.ts",
+    "research": "node scripts/research.ts"
+  },
+  "dependencies": {
+    "viem": "^2.38.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}
