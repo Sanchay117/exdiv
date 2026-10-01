@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-01T13:45:24.726Z",
- "netRatio": 0.6732168437636854,
+ "generatedAt": "2026-10-01T14:05:25.600Z",
+ "netRatio": 0.6866226947523929,
  "replay": {
   "tokens": 195,
   "events": 47,
@@ -482,7 +482,8 @@
   ]
  },
  "reinvested": {
-  "medianRatio": 0.6732168437636854,
+  "medianRatio": 0.6866226947523929,
+  "exDateCount": 21,
   "typicalCount": 25,
   "rows": [
    {
@@ -999,6 +1000,16 @@
    "adjustedRatio": 0.6941904129336135
   },
   {
+   "symbol": "COST",
+   "recordDate": "2026-07-24",
+   "appliedDate": "2026-08-10",
+   "supplyAtRecord": 128.901,
+   "supplyAtApply": 226.423,
+   "ratio": 0.38556873146941273,
+   "growth": 1.7565651158641127,
+   "adjustedRatio": 0.6772765834671479
+  },
+  {
    "symbol": "AAPL",
    "recordDate": "2026-08-10",
    "appliedDate": "2026-08-14",
@@ -1174,9 +1185,9 @@
    "symbol": "SPY",
    "mainnetAddress": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
    "multiplier": 1.001717991187472,
-   "sharePrice": 763.73,
-   "tokenPrice": 765.042081409608,
-   "quotedAt": "2026-10-01T13:45:16.984781904Z",
+   "sharePrice": 760.195,
+   "tokenPrice": 761.5010083107602,
+   "quotedAt": "2026-10-01T14:05:16.809917957Z",
    "tradingHalt": false,
    "dividends12m": [
     {
@@ -1197,28 +1208,48 @@
     }
    ],
    "annualDividend": 7.583,
-   "grossYield": 0.009928901575163998,
-   "netYield": 0.006684303780472191,
+   "grossYield": 0.009975072185426107,
+   "netYield": 0.006849110944306915,
    "projected": [
     {
      "date": "2026-12-18",
      "amount": 1.993,
-     "net": 1.3417211696210252
+     "net": 1.368439030641519
     },
     {
      "date": "2027-03-19",
      "amount": 1.797,
-     "net": 1.2097706682433427
+     "net": 1.23386098247005
     },
     {
      "date": "2027-06-17",
      "amount": 1.904,
-     "net": 1.281804870526057
+     "net": 1.307329610808556
     },
     {
      "date": "2027-09-17",
      "amount": 1.889,
-     "net": 1.2717066178696017
+     "net": 1.2970302703872703
+    },
+    {
+     "date": "2027-12-17",
+     "amount": 1.993,
+     "net": 1.368439030641519
+    },
+    {
+     "date": "2028-03-17",
+     "amount": 1.797,
+     "net": 1.23386098247005
+    },
+    {
+     "date": "2028-06-15",
+     "amount": 1.904,
+     "net": 1.307329610808556
+    },
+    {
+     "date": "2028-09-15",
+     "amount": 1.889,
+     "net": 1.2970302703872703
     }
    ],
    "reinvestedSoFar": [
@@ -1232,9 +1263,9 @@
    "symbol": "SCHD",
    "mainnetAddress": "0xd63ABB2C13d7a8421a8017a712802053568e3C1D",
    "multiplier": 1.005538606893684,
-   "sharePrice": 32.685,
-   "tokenPrice": 32.86602936632006,
-   "quotedAt": "2026-10-01T13:45:12.024373538Z",
+   "sharePrice": 32.635000000000005,
+   "tokenPrice": 32.81575243597538,
+   "quotedAt": "2026-10-01T14:05:16.810415317Z",
    "tradingHalt": false,
    "dividends12m": [
     {
@@ -1255,28 +1286,48 @@
     }
    ],
    "annualDividend": 1.0550000000000002,
-   "grossYield": 0.03227780327367294,
-   "netYield": 0.021729960843527248,
+   "grossYield": 0.03232725601348246,
+   "netYield": 0.02219662763792782,
    "projected": [
     {
      "date": "2026-12-09",
      "amount": 0.278,
-     "net": 0.18715428256630456
+     "net": 0.19088110914116524
     },
     {
      "date": "2027-03-24",
      "amount": 0.257,
-     "net": 0.17301672884726715
+     "net": 0.17646203255136497
     },
     {
      "date": "2027-06-23",
      "amount": 0.253,
-     "net": 0.1703238614722124
+     "net": 0.1737155417723554
     },
     {
      "date": "2027-09-22",
      "amount": 0.267,
-     "net": 0.179748897284904
+     "net": 0.18332825949888892
+    },
+    {
+     "date": "2027-12-08",
+     "amount": 0.278,
+     "net": 0.19088110914116524
+    },
+    {
+     "date": "2028-03-22",
+     "amount": 0.257,
+     "net": 0.17646203255136497
+    },
+    {
+     "date": "2028-06-21",
+     "amount": 0.253,
+     "net": 0.1737155417723554
+    },
+    {
+     "date": "2028-09-20",
+     "amount": 0.267,
+     "net": 0.18332825949888892
     }
    ],
    "reinvestedSoFar": [
@@ -1290,9 +1341,9 @@
    "symbol": "MSFT",
    "mainnetAddress": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
    "multiplier": 1.000412952576206,
-   "sharePrice": 519.2349999999999,
-   "tokenPrice": 519.4494194309063,
-   "quotedAt": "2026-10-01T13:45:15.070476183Z",
+   "sharePrice": 517.385,
+   "tokenPrice": 517.5986554686403,
+   "quotedAt": "2026-10-01T14:05:16.832529173Z",
    "tradingHalt": false,
    "dividends12m": [
     {
@@ -1313,28 +1364,48 @@
     }
    ],
    "annualDividend": 3.64,
-   "grossYield": 0.0070103132492994515,
-   "netYield": 0.004719460959488123,
+   "grossYield": 0.007035379842863632,
+   "netYield": 0.004830651466313693,
    "projected": [
     {
      "date": "2026-11-19",
      "amount": 0.91,
-     "net": 0.6126273278249538
+     "net": 0.6248266522246776
     },
     {
      "date": "2027-02-18",
      "amount": 0.91,
-     "net": 0.6126273278249538
+     "net": 0.6248266522246776
     },
     {
      "date": "2027-05-20",
      "amount": 0.91,
-     "net": 0.6126273278249538
+     "net": 0.6248266522246776
     },
     {
      "date": "2027-08-19",
      "amount": 0.91,
-     "net": 0.6126273278249538
+     "net": 0.6248266522246776
+    },
+    {
+     "date": "2027-11-18",
+     "amount": 0.91,
+     "net": 0.6248266522246776
+    },
+    {
+     "date": "2028-02-17",
+     "amount": 0.91,
+     "net": 0.6248266522246776
+    },
+    {
+     "date": "2028-05-18",
+     "amount": 0.91,
+     "net": 0.6248266522246776
+    },
+    {
+     "date": "2028-08-17",
+     "amount": 0.91,
+     "net": 0.6248266522246776
     }
    ],
    "reinvestedSoFar": [
@@ -1348,9 +1419,9 @@
    "symbol": "UPS",
    "mainnetAddress": "0xf23250dac154D05Bb671CB0d0eBEf3c635c79CE2",
    "multiplier": 1.0022087249692058,
-   "sharePrice": 93.365,
-   "tokenPrice": 93.5712176067499,
-   "quotedAt": "2026-10-01T13:45:15.309459468Z",
+   "sharePrice": 93.49000000000001,
+   "tokenPrice": 93.69649369737104,
+   "quotedAt": "2026-10-01T14:05:19.411654757Z",
    "tradingHalt": false,
    "dividends12m": [
     {
@@ -1371,28 +1442,48 @@
     }
    ],
    "annualDividend": 6.56,
-   "grossYield": 0.07026187543512023,
-   "netYield": 0.04730147801734886,
+   "grossYield": 0.07016793239918707,
+   "netYield": 0.04817889482913357,
    "projected": [
     {
      "date": "2026-11-16",
      "amount": 1.64,
-     "net": 1.104075623772444
+     "net": 1.1260612193939243
     },
     {
      "date": "2027-02-16",
      "amount": 1.64,
-     "net": 1.104075623772444
+     "net": 1.1260612193939243
     },
     {
      "date": "2027-05-17",
      "amount": 1.64,
-     "net": 1.104075623772444
+     "net": 1.1260612193939243
     },
     {
      "date": "2027-08-16",
      "amount": 1.64,
-     "net": 1.104075623772444
+     "net": 1.1260612193939243
+    },
+    {
+     "date": "2027-11-15",
+     "amount": 1.64,
+     "net": 1.1260612193939243
+    },
+    {
+     "date": "2028-02-15",
+     "amount": 1.64,
+     "net": 1.1260612193939243
+    },
+    {
+     "date": "2028-05-15",
+     "amount": 1.64,
+     "net": 1.1260612193939243
+    },
+    {
+     "date": "2028-08-14",
+     "amount": 1.64,
+     "net": 1.1260612193939243
     }
    ],
    "reinvestedSoFar": [
@@ -1406,9 +1497,9 @@
    "symbol": "AMZN",
    "mainnetAddress": "",
    "multiplier": 1,
-   "sharePrice": 248.79000000000002,
-   "tokenPrice": 248.79000000000002,
-   "quotedAt": "2026-10-01T13:45:19.187082874Z",
+   "sharePrice": 247.265,
+   "tokenPrice": 247.265,
+   "quotedAt": "2026-10-01T14:05:19.411450358Z",
    "tradingHalt": false,
    "dividends12m": [],
    "annualDividend": 0,
@@ -1421,9 +1512,9 @@
    "symbol": "TSLA",
    "mainnetAddress": "",
    "multiplier": 1,
-   "sharePrice": 357.12,
-   "tokenPrice": 357.12,
-   "quotedAt": "2026-10-01T13:45:20.916509020Z",
+   "sharePrice": 354.96500000000003,
+   "tokenPrice": 354.96500000000003,
+   "quotedAt": "2026-10-01T14:05:22.912767001Z",
    "tradingHalt": false,
    "dividends12m": [],
    "annualDividend": 0,
@@ -1436,9 +1527,9 @@
    "symbol": "AMD",
    "mainnetAddress": "",
    "multiplier": 1,
-   "sharePrice": 615.845,
-   "tokenPrice": 615.845,
-   "quotedAt": "2026-10-01T13:45:12.096263503Z",
+   "sharePrice": 605.05,
+   "tokenPrice": 605.05,
+   "quotedAt": "2026-10-01T14:05:15.972272361Z",
    "tradingHalt": false,
    "dividends12m": [],
    "annualDividend": 0,
@@ -1451,9 +1542,9 @@
    "symbol": "PLTR",
    "mainnetAddress": "",
    "multiplier": 1,
-   "sharePrice": 187.135,
-   "tokenPrice": 187.135,
-   "quotedAt": "2026-10-01T13:45:22.189901137Z",
+   "sharePrice": 191.435,
+   "tokenPrice": 191.435,
+   "quotedAt": "2026-10-01T14:05:12.258250237Z",
    "tradingHalt": false,
    "dividends12m": [],
    "annualDividend": 0,
@@ -1466,9 +1557,9 @@
    "symbol": "NFLX",
    "mainnetAddress": "",
    "multiplier": 1,
-   "sharePrice": 68.89,
-   "tokenPrice": 68.89,
-   "quotedAt": "2026-10-01T13:45:12.515880337Z",
+   "sharePrice": 68.125,
+   "tokenPrice": 68.125,
+   "quotedAt": "2026-10-01T14:05:17.448903132Z",
    "tradingHalt": false,
    "dividends12m": [],
    "annualDividend": 0,

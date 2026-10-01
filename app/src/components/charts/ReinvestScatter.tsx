@@ -21,6 +21,8 @@ export function ReinvestScatter({ rows }: { rows: ReinvestRow[] }) {
       <div className="legend">
         <span><i className="swatch s1" /> Applied on the ex-date</span>
         <span><i className="swatch s2" /> Applied on the pay date, weeks later</span>
+        <span><i className="line-key line-strong" /> 70% reinvested: what 30% US withholding leaves</span>
+        <span><i className="line-key" /> 100% reinvested</span>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Dividend yield against multiplier step for every reinvested dividend">
         <defs>
@@ -44,8 +46,6 @@ export function ReinvestScatter({ rows }: { rows: ReinvestRow[] }) {
           <path d={line(1)} className="ref" />
           <path d={line(0.7)} className="ref ref-strong" />
         </g>
-        <text x={sx(1.3)} y={sy(1.3) - 8} className="axis" textAnchor="start">100% reinvested</text>
-        <text x={sx(1.6)} y={sy(1.6 * 0.7) + 16} className="axis" textAnchor="start">70%: what 30% US withholding leaves</text>
         {rows.map((r) => (
           <circle key={r.symbol + r.effective} cx={sx(r.grossBps)} cy={sy(r.stepBps)} r={4.5} className={`dot ${late(r) ? 'dot-2' : 'dot-1'}`}
             onMouseEnter={(e) => {

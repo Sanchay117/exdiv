@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Header } from './components/Header';
+import { Header, Logo } from './components/Header';
 import { TxToast } from './lib/wallet';
 import { Home } from './views/Home';
 import { MarketView } from './views/Market';
@@ -32,17 +32,23 @@ export function App() {
   return (
     <>
       <Header page={page || 'home'} />
-      <main className="container">{view}</main>
-      <footer className="container footer">
-        <span>
-          Exdiv runs on Robinhood Chain testnet. Test assets only: the SPY, SCHD, MSFT and UPS tokens are mirrors that copy
-          mainnet multipliers. Not investment advice.
-        </span>
-        <span>
-          <a href={addressUrl(deployment.factory)} target="_blank" rel="noreferrer">Contracts</a>
-          {' · '}
-          <a href="https://github.com/Sanchay117/exdiv" target="_blank" rel="noreferrer">Source</a>
-        </span>
+      <main className={page ? 'container page' : 'home'}>{view}</main>
+      <footer className="footer">
+        <div className="container footer-inner">
+          <div className="footer-brand">
+            <Logo />
+            <span className="serif">Exdiv</span>
+          </div>
+          <p className="muted small">
+            Runs on Robinhood Chain testnet. Test assets only: SPY, SCHD, MSFT and UPS are mirrors that copy mainnet
+            multipliers. Not investment advice.
+          </p>
+          <nav className="footer-links mono-label">
+            <a href={addressUrl(deployment.factory)} target="_blank" rel="noreferrer">Contracts</a>
+            <a href="https://github.com/Sanchay117/exdiv" target="_blank" rel="noreferrer">Source</a>
+            <a href="#/research">Research</a>
+          </nav>
+        </div>
       </footer>
       <TxToast />
     </>

@@ -1,8 +1,9 @@
 import { useMarkets, useOrders, useResearch, bookFor, type Market, type Order } from '../lib/data';
 import { fairValue, impliedYield, bookPrice } from '../lib/valuation';
-import { date, daysUntil, pct, usd } from '../lib/format';
+import { date, pct, usd } from '../lib/format';
 import type { Research } from '../lib/types';
-import { SplitHero } from '../components/SplitHero';
+import { Hero, scrollTo } from '../components/hero/Hero';
+import { Reveal } from '../components/Reveal';
 
 const now = () => Math.floor(Date.now() / 1000);
 
@@ -11,70 +12,75 @@ function best(orders: Order[] | undefined, base: `0x${string}`) {
   return { bid: bids[0] ? bookPrice(bids[0].price) : null, ask: asks[0] ? bookPrice(asks[0].price) : null };
 }
 
-function MarketsTable({ markets, research, orders }: { markets: Market[]; research?: Research; orders?: Order[] }) {
-  const sorted = [...markets].sort((a, b) => Number(b.isMirror) - Number(a.isMirror) || a.symbol.localeCompare(b.symbol) || a.maturity - b.maturity);
+function MarketCards({ markets, research, orders }: { markets: Market[]; research?: Research; orders?: Order[] }) {
+  const mirrors = markets.filter((m) => m.isMirror);
+  const others = markets.filter((m) => !m.isMirror).sort((a, b) => a.symbol.localeCompare(b.symbol));
+  const symbols = [...new Set(mirrors.map((m) => m.symbol))].sort((a, b) =>
+    a === 'SPY' ? -1 : b === 'SPY' ? 1 : a.localeCompare(b),
+  );
   return (
-    <div className="table-wrap">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Stock token</th>
-            <th>Maturity</th>
-            <th className="num">Share price</th>
-            <th className="num" title="Projected dividends until maturity, after 30% withholding">
-              <span className="key key-d" /> Dividends to maturity
-            </th>
-            <th className="num">
-              <span className="key key-d" /> D bid / ask
-            </th>
-            <th className="num">
-              <span className="key key-p" /> P bid / ask
-            </th>
-            <th className="num">Implied yield</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((m) => {
-            const asset = research?.assets[m.symbol];
-            const fair = fairValue(asset, now(), m.maturity);
-            const d = best(orders, m.dividend);
-            const p = best(orders, m.principal);
-            const dRef = d.bid ?? fair?.dividend ?? null;
-            const y = dRef != null && asset ? impliedYield(dRef, asset.sharePrice, now(), m.maturity) : null;
-            return (
-              <tr key={m.vault} onClick={() => (window.location.hash = `#/market/${m.vault}`)} className="clickable">
-                <td>
-                  <div className="asset-cell">
-                    <strong>{m.symbol}</strong>
-                    <span className="muted">{m.isMirror ? 'mainnet mirror' : 'testnet token, no dividend'}</span>
-                  </div>
-                </td>
-                <td className="nowrap">
-                  {date(m.maturity)}
-                  <div className="muted small">{daysUntil(m.maturity)} days</div>
-                </td>
-                <td className="num">{asset ? usd(asset.sharePrice) : '—'}</td>
-                <td className="num">
-                  {fair ? usd(fair.dividend) : usd(0)}
-                  {fair && <div className="muted small">{fair.payments.length} payment{fair.payments.length === 1 ? '' : 's'}</div>}
-                </td>
-                <td className="num mono">
-                  {d.bid != null ? usd(d.bid) : '—'} / {d.ask != null ? usd(d.ask) : '—'}
-                </td>
-                <td className="num mono">
-                  {p.bid != null ? usd(p.bid) : '—'} / {p.ask != null ? usd(p.ask) : '—'}
-                </td>
-                <td className="num">{y != null && y > 0 ? pct(y) : '—'}</td>
-                <td className="num">
-                  <a className="btn btn-small" href={`#/market/${m.vault}`}>Open</a>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="asset-grid">
+        {symbols.map((symbol) => {
+          const list = mirrors.filter((m) => m.symbol === symbol).sort((a, b) => a.maturity - b.maturity);
+          const asset = research?.assets[symbol];
+          return (
+            <article key={symbol} className="asset-card glass">
+              <header className="asset-head">
+                <div>
+                  <span className="ticker">{symbol}</span>
+                  <span className="muted small asset-name">{list[0].assetName.replace(/\s*\(testnet mirror\)/, '')}</span>
+                </div>
+                <div className="asset-price">
+                  <strong>{asset ? usd(asset.sharePrice) : '—'}</strong>
+                  <span className="mono-label">{asset ? `${pct(asset.netYield)} net yield` : ''}</span>
+                </div>
+              </header>
+              <ul className="maturities">
+                {list.map((m) => {
+                  const fair = fairValue(asset, now(), m.maturity);
+                  const d = best(orders, m.dividend);
+                  const y = d.bid != null && asset ? impliedYield(d.bid, asset.sharePrice, now(), m.maturity) : null;
+                  return (
+                    <li key={m.vault}>
+                      <a href={`#/market/${m.vault}`}>
+                        <span className="mat-date">
+                          <span className="mono-label">Matures</span>
+                          {date(m.maturity)}
+                        </span>
+                        <span className="mat-d">
+                          <span className="mono-label"><i className="key key-d" />Dividends</span>
+                          {fair ? usd(fair.dividend) : '—'}
+                        </span>
+                        <span className="mat-book">
+                          <span className="mono-label">D bid / ask</span>
+                          <span className="mono">{d.bid != null ? usd(d.bid) : '—'} / {d.ask != null ? usd(d.ask) : '—'}</span>
+                        </span>
+                        <span className="mat-y">
+                          <span className="mono-label">Implied</span>
+                          {y != null && y > 0 ? pct(y) : '—'}
+                        </span>
+                        <span className="mat-go" aria-hidden="true">→</span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </article>
+          );
+        })}
+      </div>
+      {others.length > 0 && (
+        <div className="testnet-row">
+          <span className="mono-label">Testnet's own stock tokens, no dividends to strip</span>
+          <div className="chips">
+            {others.map((m) => (
+              <a key={m.vault} className="chip" href={`#/market/${m.vault}`}>{m.symbol}</a>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -84,75 +90,108 @@ export function Home() {
   const orders = useOrders();
   const r = research.data;
   const spy = markets.data?.find((m) => m.symbol === 'SPY');
+  const dilution = r?.dilution?.find((d) => d.symbol === 'LLY');
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">Dividend strips for Robinhood stock tokens</p>
-          <h1>Take the dividends off your stocks.</h1>
-          <p className="lede">
-            Robinhood stock tokens reinvest every dividend automatically. There is no switch to take them as cash, and no
-            way to sell them on their own. Exdiv splits a stock token into its <b className="t-p">price</b> and its{' '}
-            <b className="t-d">dividends</b> until a maturity date. Keep one, sell the other for USDG.
+      <Hero research={r} spy={spy} />
+
+      <div className="container">
+        <Reveal as="section" id="problem" className="statement">
+          <span className="mono-label">The problem</span>
+          <p className="statement-text">
+            Robinhood reinvests every dividend into the token itself. In the app there is a switch to turn that off.{' '}
+            <span className="dim">Onchain there is none. No cash income, no way to sell next year's dividends, no way to hedge them.</span>{' '}
+            Wall Street trades dividends on their own. <em>Now stock tokens can too.</em>
           </p>
-          <div className="hero-ctas">
-            {spy ? (
-              <a className="btn btn-lg" href={`#/market/${spy.vault}`}>Strip SPY</a>
-            ) : (
-              <a className="btn btn-lg" href="#markets">See markets</a>
-            )}
-            <a className="btn btn-lg btn-ghost" href="#/how">How it works</a>
-          </div>
-        </div>
-        <SplitHero research={r} market={spy} />
-      </section>
+        </Reveal>
 
-      {r && (
-        <section className="stats">
-          <div className="stat">
-            <span className="stat-value">{r.replay.dividends}</span>
-            <span className="stat-label">dividends Robinhood has reinvested onchain so far, across {new Set(r.replay.rows.filter((x) => x.kind === 'dividend').map((x) => x.symbol)).size} tokens</span>
+        <Reveal as="section" className="halves">
+          <article className="half-card half-p">
+            <span className="mono-label">P · principal</span>
+            <h3 className="serif">The price.</h3>
+            <p>The stock without its dividends. At maturity one P redeems for exactly one share's worth of the token. Buy it below the share price and the discount is your return.</p>
+            <code className="sym">SPY-P-31DEC2026</code>
+          </article>
+          <div className="halves-eq">
+            <span className="serif">1 P + 1 D</span>
+            <span className="mono-label">= 1 share, any time before maturity</span>
           </div>
-          <div className="stat">
-            <span className="stat-value">{pct(r.netRatio, 0)}</span>
-            <span className="stat-label">of a dividend actually reaches token holders (30% US withholding)</span>
-          </div>
-          <div className="stat">
-            <span className="stat-value">0</span>
-            <span className="stat-label">price oracles, admin keys or liquidations in the vault</span>
-          </div>
-          <div className="stat">
-            <span className="stat-value">{r.replay.dividends + r.replay.splits}/{r.replay.dividends + r.replay.splits}</span>
-            <span className="stat-label">real mainnet multiplier changes classified correctly in our replay test</span>
-          </div>
-        </section>
-      )}
+          <article className="half-card half-d">
+            <span className="mono-label">D · dividends</span>
+            <h3 className="serif">The dividends.</h3>
+            <p>Every dividend Robinhood reinvests until maturity, claimable whenever it lands, as stock tokens or straight into USDG. Sell it upfront for cash today.</p>
+            <code className="sym">SPY-D-31DEC2026</code>
+          </article>
+        </Reveal>
 
-      <section className="uses">
-        <article className="card">
-          <h3>Dividend advance</h3>
-          <p>Strip your SPY and sell the dividend half on the USDG order book. You get next year's dividends in cash today and keep every bit of the price exposure.</p>
-        </article>
-        <article className="card">
-          <h3>Income mode</h3>
-          <p>Hold both halves and claim each dividend as it lands, as stock tokens or straight into USDG. It's the dividend-reinvestment off switch the token doesn't have.</p>
-        </article>
-        <article className="card">
-          <h3>Stock at a discount</h3>
-          <p>Buy the price half below the share price. At maturity, one P redeems for exactly one share's worth of the stock token, so the discount is your return.</p>
-        </article>
-      </section>
+        <Reveal as="section" className="uses">
+          {[
+            ['01', 'Dividend advance', "Strip SPY and sell the dividend half on the USDG order book in one transaction. Next year's dividends in cash today, full price exposure kept."],
+            ['02', 'Income mode', "Hold both halves and claim each dividend as it lands, straight into USDG. The reinvestment off switch the token doesn't have."],
+            ['03', 'Stock at a discount', 'Buy the price half below the share price. At maturity it redeems for a full share unit, so the discount is your yield.'],
+          ].map(([n, title, body]) => (
+            <article key={n} className="use glass">
+              <span className="use-n mono-label">{n}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </Reveal>
 
-      <section id="markets">
-        <div className="section-head">
-          <h2>Markets</h2>
-          <p className="muted">Prices in USDG per share unit. Fair dividend values come from each stock's last 12 months of dividends, rolled forward and taken net of withholding.</p>
-        </div>
-        {markets.isLoading && <p className="muted">Loading markets from Robinhood Chain…</p>}
-        {markets.error && <p className="error">Couldn't read the chain: {(markets.error as Error).message}</p>}
-        {markets.data && <MarketsTable markets={markets.data} research={r} orders={orders.data} />}
-      </section>
+        <Reveal as="section" id="markets" className="markets">
+          <div className="section-head">
+            <div>
+              <span className="mono-label">Markets</span>
+              <h2 className="serif">Pick a stock and a maturity.</h2>
+            </div>
+            <p className="muted small">
+              Dividend values roll each stock's last twelve months of dividends forward and keep what Robinhood reinvests
+              after withholding. Order book prices in USDG per share unit.
+            </p>
+          </div>
+          {markets.isLoading && <p className="muted">Loading markets from Robinhood Chain…</p>}
+          {markets.error && <p className="error">Couldn't read the chain: {(markets.error as Error).message}</p>}
+          {markets.data && <MarketCards markets={markets.data} research={r} orders={orders.data} />}
+        </Reveal>
+
+        {r && (
+          <Reveal as="section" className="findings">
+            <div className="section-head">
+              <div>
+                <span className="mono-label">Research</span>
+                <h2 className="serif">What {r.replay.events} multiplier changes taught us.</h2>
+              </div>
+              <a className="btn btn-glass" href="#/research">Read the research <span aria-hidden="true">→</span></a>
+            </div>
+            <div className="finding-grid">
+              <article className="finding glass">
+                <span className="figure serif">{r.replay.dividends + r.replay.splits}/{r.replay.dividends + r.replay.splits}</span>
+                <p>Every dividend and split Robinhood has made on mainnet, replayed through our classifier in a Foundry test. No freezes, no manual input.</p>
+              </article>
+              <article className="finding glass">
+                <span className="figure serif">{Math.round(r.netRatio * 100)}%</span>
+                <p>Of each dividend reaches token holders. The rest is the 30% US withholding tax, so a dividend token is valued on what is actually paid.</p>
+              </article>
+              <article className="finding glass">
+                <span className="figure serif">{dilution ? `${pct(dilution.ratio, 1)}` : '0.2%'}</span>
+                <p>Of their dividend reached LLY holders on the record date. Pay-date dividends follow the token supply on the pay date, which grew {dilution ? `${Math.round(dilution.supplyAtApply / dilution.supplyAtRecord)}×` : '466×'}.</p>
+              </article>
+            </div>
+          </Reveal>
+        )}
+
+        <Reveal as="section" className="closing">
+          <h2 className="display small-display">
+            Dividends you can <em>trade</em>.
+          </h2>
+          <p className="muted">No oracle. No admin over funds. No liquidations. Just the multiplier, taken apart.</p>
+          <div className="hero-ctas center">
+            <a className="btn btn-light btn-lg" href={spy ? `#/market/${spy.vault}` : '#/'} onClick={spy ? undefined : scrollTo('markets')}>Launch app <span aria-hidden="true">→</span></a>
+            <a className="btn btn-glass btn-lg" href="https://github.com/Sanchay117/exdiv" target="_blank" rel="noreferrer">Read the code</a>
+          </div>
+        </Reveal>
+      </div>
     </>
   );
 }
