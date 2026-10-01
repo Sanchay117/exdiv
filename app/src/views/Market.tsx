@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { erc20Abi, formatUnits, parseUnits, type Address } from 'viem';
-import { bookAbi, mockStockTokenAbi, routerAbi, vaultAbi } from '../generated/abis';
+import { bookAbi, demoStockAbi, mockStockTokenAbi, routerAbi, vaultAbi } from '../generated/abis';
 import { addressUrl, deployment, FAUCETS } from '../lib/chain';
 import { bookFor, useIndexState, useMarkets, useOrders, usePosition, useResearch, type Market, type Order, type Position } from '../lib/data';
 import { amount, date, daysUntil, multiplier, pct, shortAddress, usd } from '../lib/format';
@@ -327,6 +327,12 @@ function PositionCard({ m, pos }: { m: Market; pos?: Position }) {
             {canFaucet ? `Get 100 test ${m.symbol}` : 'Faucet used today'}
           </button>
         )}
+        {m.symbol === 'DEMO' && (
+          <button className="btn btn-small btn-d"
+            onClick={() => run('Pay a DEMO dividend', (w, a) => w.writeContract({ account: a, address: m.asset, abi: demoStockAbi, functionName: 'payDividend' }))}>
+            Pay a 0.3% dividend
+          </button>
+        )}
         <a className="btn btn-small btn-ghost" href={FAUCETS.usdg} target="_blank" rel="noreferrer">USDG faucet</a>
         <a className="btn btn-small btn-ghost" href={FAUCETS.eth} target="_blank" rel="noreferrer">Gas faucet</a>
       </div>
@@ -406,6 +412,12 @@ export function MarketView({ vault }: { vault: Address }) {
               <dt>Best P offer, discount</dt><dd>{disc ? `${pct(disc.discount)} (${pct(disc.annualized)} a year)` : '—'}</dd>
             </dl>
             {!asset && <p className="muted small">This testnet token pays no dividends, so its D is worth nothing and its P is the whole share.</p>}
+            {asset?.synthetic && (
+              <p className="muted small">
+                DEMO is a testnet stock that pays a 0.3% dividend whenever anyone presses the button (once every ten minutes),
+                so you can watch a dividend land on D. Its $100 price is nominal.
+              </p>
+            )}
           </div>
         </div>
       </section>

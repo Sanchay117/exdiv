@@ -6,6 +6,7 @@ import {ExdivVault} from "../src/ExdivVault.sol";
 import {ExdivFactory} from "../src/ExdivFactory.sol";
 import {ExdivToken} from "../src/ExdivTokens.sol";
 import {MockStockToken} from "../src/mocks/MockStockToken.sol";
+import {DemoStockToken} from "../src/mocks/DemoStockToken.sol";
 
 contract ExdivVaultTest is BaseTest {
     function test_metadata() public view {
@@ -255,6 +256,31 @@ contract ExdivVaultTest is BaseTest {
         vm.expectRevert(ExdivVault.ZeroAmount.selector);
         vm.prank(alice);
         vault.redeem(0, alice);
+    }
+
+    function test_demoStock_paysDividendOnDemand() public {
+        DemoStockToken demo = new DemoStockToken("Demo", "DEMO", owner);
+        vm.prank(owner);
+        index.register(address(demo));
+        ExdivVault v = factory.createVault(address(demo), maturity);
+        vm.prank(owner);
+        demo.mint(alice, 100e18);
+        vm.startPrank(alice);
+        demo.approve(address(v), type(uint256).max);
+        v.mint(100e18, alice, alice);
+        vm.stopPrank();
+
+        vm.prank(carol);
+        demo.payDividend(); // anyone can
+        assertEq(demo.uiMultiplier(), 1.003e18);
+        uint256 expected = 100e18 - uint256(100e18) * 1e18 / 1.003e18;
+        assertApproxEqRel(v.claimable(alice), expected, 1e9);
+
+        vm.expectRevert(abi.encodeWithSelector(DemoStockToken.DividendCooldown.selector, block.timestamp + 10 minutes));
+        demo.payDividend();
+        vm.warp(block.timestamp + 10 minutes);
+        demo.payDividend();
+        assertEq(demo.uiMultiplier(), uint256(1.003e18) * 10_030 / 10_000);
     }
 
     function test_hook_onlyDividendToken() public {

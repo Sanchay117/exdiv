@@ -45,6 +45,8 @@ export interface AssetResearch {
   netYield: number;
   projected: { date: string; amount: number; net: number }[];
   reinvestedSoFar: { date: string; stepBps: number }[];
+  /** Testnet DEMO stock: nominal price, dividends on demand. */
+  synthetic?: boolean;
 }
 
 export interface Research {

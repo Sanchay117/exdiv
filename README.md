@@ -6,7 +6,7 @@ Built on Robinhood Chain for the Arbitrum Open House Singapore buildathon, with 
 
 - **App:** https://sanchay117.github.io/exdiv/ (Robinhood Chain testnet)
 - **Demo video:** _link_
-- **Contracts:** [Robinhood Chain testnet](#deployed-contracts), verified on Blockscout
+- **Contracts:** [Robinhood Chain testnet](#deployed-contracts), verified on Blockscout (factory [`0xC89dFACC…`](https://explorer.testnet.chain.robinhood.com/address/0xC89dFACC621770Eaa314cfFe9579C66506755945#code))
 
 ![Exdiv](docs/hero.png)
 
@@ -94,7 +94,7 @@ The index never decreases. Changes are recorded at the token's `effectiveAt`, so
 cd contracts && forge test
 ```
 
-63 tests, all passing; 98% line coverage on `src` (`forge coverage`); `forge lint src` clean, with the excluded rules justified in `foundry.toml`.
+64 tests, all passing; 98% line coverage on `src` (`forge coverage`); `forge lint src` clean, with the excluded rules justified in `foundry.toml`.
 
 - **Mainnet replay** ([`MainnetReplay.t.sol`](contracts/test/MainnetReplay.t.sol)): every `UIMultiplierUpdated` event on Robinhood Chain mainnet runs through `DividendIndex`. All 45 dividends and CRWD's split are classified correctly, with no freeze and no manual input.
 - **Invariants** ([`ExdivInvariant.t.sol`](contracts/test/ExdivInvariant.t.sol)): random deposits, redemptions, P and D transfers, claims, dividends, splits and time jumps, 25,600 calls per run. The vault always holds enough for every P and every dividend owed; tokens are never created or lost; P and D supplies match before maturity; rounding dust stays below 1e-12 tokens.
@@ -108,13 +108,14 @@ Robinhood Chain testnet (chain id 46630):
 
 | Contract | Address |
 |---|---|
-| DividendIndex | _pending_ |
-| ExdivFactory | _pending_ |
-| ExdivBook | _pending_ |
-| ExdivRouter | _pending_ |
-| USDG (Paxos) | `0x7E955252E15c84f5768B83c41a71F9eba181802F` |
+| DividendIndex | [`0x2f4E69182B686dd60963E84C9a987795A8f095c1`](https://explorer.testnet.chain.robinhood.com/address/0x2f4E69182B686dd60963E84C9a987795A8f095c1#code) |
+| ExdivFactory | [`0xC89dFACC621770Eaa314cfFe9579C66506755945`](https://explorer.testnet.chain.robinhood.com/address/0xC89dFACC621770Eaa314cfFe9579C66506755945#code) |
+| ExdivBook | [`0xBA2ba5315AB820d1c34585ad6c9aE97FE258ae31`](https://explorer.testnet.chain.robinhood.com/address/0xBA2ba5315AB820d1c34585ad6c9aE97FE258ae31#code) |
+| ExdivRouter | [`0xf6c4f180502457Ee5DF94A3Da9c6307EC6b308B0`](https://explorer.testnet.chain.robinhood.com/address/0xf6c4f180502457Ee5DF94A3Da9c6307EC6b308B0#code) |
+| USDG (Paxos) | [`0x7E955252E15c84f5768B83c41a71F9eba181802F`](https://explorer.testnet.chain.robinhood.com/address/0x7E955252E15c84f5768B83c41a71F9eba181802F) |
+| DEMO stock (pays a dividend on demand) | [`0x7abdC2cE747c493748d0d7A83024D947C62b39B2`](https://explorer.testnet.chain.robinhood.com/address/0x7abdC2cE747c493748d0d7A83024D947C62b39B2) |
 
-Testnet's own stock tokens (AMZN, TSLA, AMD, PLTR, NFLX) implement ERC-8056 but pay no dividends, so they get vaults with nothing to collect. The dividend payers are mirrors of mainnet SPY, SCHD, MSFT and UPS: a keeper copies each mainnet multiplier change, so testnet dividends arrive when and as Robinhood pays them.
+All four core contracts are verified on Blockscout. Testnet's own stock tokens (AMZN, TSLA, AMD, PLTR, NFLX) implement ERC-8056 but pay no dividends, so they get vaults with nothing to collect. The dividend payers are mirrors of mainnet SPY, SCHD, MSFT and UPS: a keeper copies each mainnet multiplier change, so testnet dividends arrive when and as Robinhood pays them. None of those pays again before late October, so a DEMO stock pays a 0.3% dividend whenever anyone presses the button (at most every ten minutes): strip some DEMO, pay a dividend and watch it land on D.
 
 ## Run it
 

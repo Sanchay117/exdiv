@@ -25,7 +25,9 @@ const scaledUiAbi = [
 
 async function send(label: string, request: Parameters<typeof client.writeContract>[0]) {
   if (dryRun) return console.log(`  [dry-run] ${label}`);
-  const hash = await client.writeContract(request);
+  // Arbitrum gas estimates include an L1 data cost that can rise before inclusion, so leave headroom.
+  const gas = await testnet.estimateContractGas({ ...request, account: client.account } as never);
+  const hash = await client.writeContract({ ...request, gas: (gas * 13n) / 10n } as never);
   const receipt = await testnet.waitForTransactionReceipt({ hash });
   console.log(`  ${label}: ${receipt.status} ${hash}`);
 }

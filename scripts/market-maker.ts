@@ -26,7 +26,9 @@ const BID_BUDGET = 0.9;
 
 async function send(label: string, request: object) {
   if (dryRun) return console.log(`  [dry-run] ${label}`);
-  const hash = await client.writeContract(request as never);
+  // Arbitrum gas estimates include an L1 data cost that can rise before inclusion, so leave headroom.
+  const gas = await testnet.estimateContractGas({ ...(request as object), account: client.account } as never);
+  const hash = await client.writeContract({ ...(request as object), gas: (gas * 13n) / 10n } as never);
   const receipt = await testnet.waitForTransactionReceipt({ hash });
   if (receipt.status !== 'success') throw new Error(`${label} reverted: ${hash}`);
   console.log(`  ${label}`);
@@ -97,12 +99,14 @@ for (const vault of deployment.vaults) {
   if (dFair > 0) {
     quotes.push({ base: dividend, isBid: false, usd: dFair * 1.06, units: INVENTORY / 2n, label: `${symbol}-D ask` });
     quotes.push({ base: dividend, isBid: false, usd: dFair * 1.15, units: INVENTORY / 2n, label: `${symbol}-D ask 2` });
-    bids.push({ base: dividend, usd: dFair * 0.94, weight: 3, label: `${symbol}-D bid` });
-    bids.push({ base: dividend, usd: dFair * 0.85, weight: 2, label: `${symbol}-D bid 2` });
+    // USDG is scarce on testnet (100 a day from the faucet), so SPY's dividend bids get the most: that's the demo.
+    const focus = symbol === 'SPY' ? 3 : 1;
+    bids.push({ base: dividend, usd: dFair * 0.94, weight: 2 * focus, label: `${symbol}-D bid` });
+    bids.push({ base: dividend, usd: dFair * 0.85, weight: focus, label: `${symbol}-D bid 2` });
   }
   // P can't be worth more than the whole share, so offers stay below it.
   quotes.push({ base: principal, isBid: false, usd: Math.min(pFair * 1.002, a.sharePrice * 0.9995), units: INVENTORY / 4n, label: `${symbol}-P ask` });
-  bids.push({ base: principal, usd: pFair * 0.995, weight: 1, label: `${symbol}-P bid` });
+  bids.push({ base: principal, usd: pFair * 0.995, weight: 0.5, label: `${symbol}-P bid` });
   if (!bidAssets.has(asset)) bids.push({ base: asset, usd: a.tokenPrice * 0.995, weight: 1, label: `${symbol} bid` });
   bidAssets.add(asset);
 }

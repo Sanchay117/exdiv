@@ -211,6 +211,13 @@ for (const symbol of ['AMZN', 'TSLA', 'AMD', 'PLTR', 'NFLX']) {
   }
 }
 
+// The testnet DEMO stock pays dividends on demand, so it has no schedule; a nominal $100 share price values P.
+assets.DEMO = {
+  symbol: 'DEMO', mainnetAddress: '', multiplier: 1, sharePrice: 100, tokenPrice: 100, quotedAt: new Date().toISOString(),
+  tradingHalt: false, dividends12m: [], annualDividend: 0, grossYield: 0, netYield: 0, projected: [], reinvestedSoFar: [],
+  synthetic: true,
+};
+
 const outDir = join(root, 'app/public/data');
 mkdirSync(outDir, { recursive: true });
 writeFileSync(

@@ -52,6 +52,10 @@ contract MockStockToken is ERC20, Ownable, ERC165, IScaledUIAmount, IScaledUIAmo
 
     /// @notice Applies a new multiplier now.
     function updateMultiplier(uint256 multiplier) external onlyOwner {
+        _applyMultiplier(multiplier);
+    }
+
+    function _applyMultiplier(uint256 multiplier) internal {
         uint256 old = uiMultiplier();
         _uiMultiplier = multiplier;
         _newUIMultiplier = multiplier;

@@ -9,12 +9,14 @@ import {ExdivBook} from "../src/ExdivBook.sol";
 import {ExdivRouter} from "../src/ExdivRouter.sol";
 import {ExdivVault} from "../src/ExdivVault.sol";
 import {MockStockToken} from "../src/mocks/MockStockToken.sol";
+import {DemoStockToken} from "../src/mocks/DemoStockToken.sol";
 
 /// @notice Deploys Exdiv to Robinhood Chain testnet (46630).
 ///
 /// Testnet's own stock tokens (AMZN, TSLA, AMD, PLTR, NFLX) implement ERC-8056 but pay no dividends, so they get
 /// vaults too, alongside four dividend payers mirrored from mainnet. The mirrors start at their mainnet multipliers
-/// (read 2026-10-01) and the keeper (scripts/keeper.ts) copies every later mainnet change.
+/// (read 2026-10-01) and the keeper (scripts/keeper.ts) copies every later mainnet change. None of them pays before
+/// the end of October, so a DEMO stock pays a 0.3% dividend on demand.
 ///
 ///   forge script script/Deploy.s.sol --rpc-url robinhood_testnet --broadcast
 contract Deploy is Script {
@@ -61,7 +63,7 @@ contract Deploy is Script {
         ExdivRouter router = new ExdivRouter(factory, book);
 
         Mirror[4] memory mirrors = _mirrors();
-        address[] memory tokens = new address[](mirrors.length + 5);
+        address[] memory tokens = new address[](mirrors.length + 6);
         for (uint256 i; i < mirrors.length; ++i) {
             MockStockToken token = new MockStockToken(mirrors[i].name, mirrors[i].symbol, deployer);
             token.updateMultiplier(mirrors[i].multiplier);
@@ -71,6 +73,14 @@ contract Deploy is Script {
             factory.createVault(address(token), DEC_2027);
             tokens[i] = address(token);
         }
+        // A demo stock anyone can make pay a dividend, so the dividend side can be tried today.
+        DemoStockToken demo =
+            new DemoStockToken("Exdiv Demo Stock (testnet, pays a dividend on demand)", "DEMO", deployer);
+        demo.mint(deployer, 10_000e18);
+        index.register(address(demo));
+        factory.createVault(address(demo), DEC_2026);
+        tokens[mirrors.length + 5] = address(demo);
+
         address[5] memory stocks = _testnetStocks();
         for (uint256 i; i < stocks.length; ++i) {
             index.register(stocks[i]);

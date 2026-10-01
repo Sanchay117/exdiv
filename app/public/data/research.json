@@ -1567,6 +1567,22 @@
    "netYield": 0,
    "projected": [],
    "reinvestedSoFar": []
+  },
+  "DEMO": {
+   "symbol": "DEMO",
+   "mainnetAddress": "",
+   "multiplier": 1,
+   "sharePrice": 100,
+   "tokenPrice": 100,
+   "quotedAt": "2026-10-01T15:22:47.988158+00:00",
+   "tradingHalt": false,
+   "dividends12m": [],
+   "annualDividend": 0,
+   "grossYield": 0,
+   "netYield": 0,
+   "projected": [],
+   "reinvestedSoFar": [],
+   "synthetic": true
   }
  }
 }
