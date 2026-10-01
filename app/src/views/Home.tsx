@@ -15,9 +15,9 @@ function best(orders: Order[] | undefined, base: `0x${string}`) {
 function MarketCards({ markets, research, orders }: { markets: Market[]; research?: Research; orders?: Order[] }) {
   const mirrors = markets.filter((m) => m.isMirror);
   const others = markets.filter((m) => !m.isMirror).sort((a, b) => a.symbol.localeCompare(b.symbol));
-  const symbols = [...new Set(mirrors.map((m) => m.symbol))].sort((a, b) =>
-    a === 'SPY' ? -1 : b === 'SPY' ? 1 : a.localeCompare(b),
-  );
+  // SPY first, the testnet DEMO stock last, the rest alphabetically.
+  const rank = (s: string) => (s === 'SPY' ? 0 : s === 'DEMO' ? 2 : 1);
+  const symbols = [...new Set(mirrors.map((m) => m.symbol))].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
   return (
     <>
       <div className="asset-grid">

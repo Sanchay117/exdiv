@@ -5,10 +5,16 @@
 Built on Robinhood Chain for the Arbitrum Open House Singapore buildathon, with Paxos USDG as the quote currency.
 
 - **App:** https://sanchay117.github.io/exdiv/ (Robinhood Chain testnet)
-- **Demo video:** _link_
+- **Demo video:** https://sanchay117.github.io/exdiv/demo.mp4 (2:57, narrated, real testnet transactions)
 - **Contracts:** [Robinhood Chain testnet](#deployed-contracts), verified on Blockscout (factory [`0xC89dFACC…`](https://explorer.testnet.chain.robinhood.com/address/0xC89dFACC621770Eaa314cfFe9579C66506755945#code))
 
 ![Exdiv](docs/hero.png)
+
+| Strip SPY and sell its dividends for USDG | Two tokens, one share |
+|---|---|
+| ![Sell dividends](docs/sell-dividends.png) | ![P and D](docs/two-tokens.png) |
+| **Markets, quoted in USDG** | **What the multipliers say** |
+| ![Markets](docs/markets.png) | ![Research](docs/research.png) |
 
 ## The problem
 

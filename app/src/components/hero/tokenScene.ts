@@ -348,7 +348,11 @@ export function mountTokenScene(canvas: HTMLCanvasElement, reducedMotion: boolea
   if (reducedMotion) draw(4);
   else frame();
   // Dev only: render a given moment on demand (for screenshots from a backgrounded tab).
-  if (import.meta.env.DEV) (window as unknown as { __exdivDraw: (t: number) => void }).__exdivDraw = draw;
+  if (import.meta.env.DEV) {
+    const w = window as unknown as { __exdivDraw: (t: number) => void; __exdivReplay: () => void };
+    w.__exdivDraw = draw;
+    w.__exdivReplay = () => clock.start(); // replays the opening, for recording the demo
+  }
 
   return {
     dispose() {
