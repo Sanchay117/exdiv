@@ -136,6 +136,15 @@ contract ExdivBookTest is BaseTest {
         assertLe(usdg.balanceOf(alice) - 1_000_000 * USD, escrow);
     }
 
+    function test_getOrders() public {
+        uint256 a = _bid(bob, address(spy), 700 * USD, 1e18);
+        uint256 b = _ask(carol, address(spy), 710 * USD, 2e18);
+        ExdivBook.Order[] memory orders = book.getOrders(_ids(a, b));
+        assertTrue(orders[0].isBid);
+        assertEq(orders[1].maker, carol);
+        assertEq(orders[1].remaining, 2e18);
+    }
+
     function test_placeOrder_guards() public {
         vm.startPrank(alice);
         vm.expectRevert(ExdivBook.ZeroAmount.selector);
@@ -218,6 +227,15 @@ contract ExdivRouterTest is BaseTest {
         vm.expectRevert(abi.encodeWithSelector(ExdivRouter.UnknownVault.selector, address(rogue)));
         vm.prank(alice);
         router.stripAndSellDividends(rogue, 1e18, new uint256[](0), 0, alice);
+    }
+
+    function test_claimDividendsForQuote_nothingToClaim() public {
+        _mint(alice, 10e18);
+        vm.startPrank(alice);
+        vault.setOperator(address(router), true);
+        (uint256 assets, uint256 quoteOut) = router.claimDividendsForQuote(vault, new uint256[](0), 0, alice);
+        vm.stopPrank();
+        assertEq(assets + quoteOut, 0);
     }
 
     function test_claimDividendsForQuote() public {

@@ -5,6 +5,7 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
+import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 /// @title ExdivBook
 /// @notice A minimal escrowed limit order book that quotes every market in one token (USDG): stock tokens,
@@ -137,7 +138,7 @@ contract ExdivBook is ReentrancyGuard {
         take = Math.min(want, o.remaining);
         proceeds = Math.mulDiv(take, o.price, PRICE_SCALE);
         address maker = o.maker;
-        o.remaining -= uint128(take);
+        o.remaining -= SafeCast.toUint128(take);
         o.quoteLocked -= proceeds;
         emit OrderFilled(id, msg.sender, take, proceeds);
         if (o.remaining == 0) {
@@ -155,7 +156,7 @@ contract ExdivBook is ReentrancyGuard {
         take = Math.min(want, o.remaining);
         cost = Math.mulDiv(take, o.price, PRICE_SCALE, Math.Rounding.Ceil);
         address maker = o.maker;
-        o.remaining -= uint128(take);
+        o.remaining -= SafeCast.toUint128(take);
         emit OrderFilled(id, msg.sender, take, cost);
         if (o.remaining == 0) {
             delete _orders[id];

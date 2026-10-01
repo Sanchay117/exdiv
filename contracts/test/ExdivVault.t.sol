@@ -237,6 +237,26 @@ contract ExdivVaultTest is BaseTest {
         assertEq(spy.balanceOf(bob), 1000e18 + got);
     }
 
+    function test_views() public {
+        uint256 units = _mint(alice, 10e18);
+        assertLe(vault.previewRedeem(units), 10e18, "rounds down");
+        assertApproxEqAbs(vault.previewRedeem(units), 10e18, 1);
+        assertGe(vault.principalBacking(), vault.previewRedeem(units), "backing rounds up");
+        assertEq(factory.vaultAt(0), address(vault));
+        vm.prank(alice);
+        assertEq(vault.claimDividends(alice, alice), 0, "nothing to claim yet");
+        _payDividend(25);
+        (uint256 idx, bool reliable) = vault.previewIndex();
+        assertTrue(reliable);
+        assertGt(idx, SPY_MULTIPLIER);
+    }
+
+    function test_redeem_zeroReverts() public {
+        vm.expectRevert(ExdivVault.ZeroAmount.selector);
+        vm.prank(alice);
+        vault.redeem(0, alice);
+    }
+
     function test_hook_onlyDividendToken() public {
         vm.expectRevert(ExdivVault.OnlyDividendToken.selector);
         vault.beforeDividendTransfer(alice, bob);

@@ -13,6 +13,25 @@ remappings = [
 ]
 fs_permissions = [{ access = "read", path = "./test/fixtures" }, { access = "read-write", path = "./deployments" }]
 
+[lint]
+# Checked by hand and left on purpose:
+#  boolean-cst        returning literal flags from classifiers, e.g. `return (true, ratio, false)`
+#  block-timestamp    maturities and corporate actions are dated; the sequencer's timestamp is the source of truth
+#  reentrancy-*       every state-changing entry point is nonReentrant; the remaining external calls are to the
+#                     immutable dividend index, our own P/D tokens, or a curated stock token's view functions
+#  uninitialized-local  `for (uint256 i; ...)` loop counters
+#  divide-before-multiply  DateLabel's civil-from-days algorithm is integer arithmetic by design
+#  incorrect-strict-equality  ExdivBook rejects fee-on-transfer tokens by requiring an exact balance delta
+exclude_lints = [
+  "boolean-cst",
+  "block-timestamp",
+  "reentrancy-events",
+  "reentrancy-no-eth",
+  "uninitialized-local",
+  "divide-before-multiply",
+  "incorrect-strict-equality",
+]
+
 [fuzz]
 runs = 2_000
 

@@ -10,3 +10,4 @@ app/dist/
 .DS_Store
 *.log
 notes/
+*.tsbuildinfo

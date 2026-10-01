@@ -95,10 +95,12 @@ contract DividendIndex is Ownable2Step {
         if (m == 0) revert InvalidMultiplier(token);
         st.registered = true;
         st.multiplier = m;
-        st.index.push(uint48(block.timestamp), m.toUint208());
+        st.index.push(block.timestamp.toUint48(), m.toUint208());
         emit TokenRegistered(token, m);
     }
 
+    /// @notice Sets (or, with address(0), removes) the attester.
+    // forge-lint: disable-next-line(missing-zero-check)
     function setAttester(address newAttester) external onlyOwner {
         attester = newAttester;
         emit AttesterSet(newAttester);
@@ -273,7 +275,7 @@ contract DividendIndex is Ownable2Step {
             if (at != 0 && at < time) time = at;
         } catch {}
         (, uint48 lastKey,) = st.index.latestCheckpoint();
-        return uint48(Math.max(time, lastKey));
+        return Math.max(time, lastKey).toUint48();
     }
 
     function _knownSplits() internal pure returns (Ratio[16] memory r) {
